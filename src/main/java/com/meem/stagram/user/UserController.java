@@ -3,24 +3,18 @@ package com.meem.stagram.user;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.meem.stagram.dto.RequestDTO;
-import com.meem.stagram.post.IPostService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -77,7 +71,7 @@ public class UserController {
     /**
      * 2022.10.26.김요한.추가 - 로그아웃
      * */
-    @PostMapping("/userLogout")
+    @GetMapping("/userLogout")
     public HashMap<String, Object> userLogout(HttpServletRequest request) throws Exception{
         
         HashMap<String, Object> resultMap = new HashMap<>();

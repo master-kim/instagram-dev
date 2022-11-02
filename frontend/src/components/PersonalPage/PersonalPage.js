@@ -3,7 +3,7 @@ import { Component, useState } from "react";
 import Header from "../Header/Header";
 
 import pp1 from "../../images/pp1.png";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+//import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {IoMdSettings} from 'react-icons/io'
 import {FaHeart } from 'react-icons/fa'
 import {FaComment } from 'react-icons/fa'
