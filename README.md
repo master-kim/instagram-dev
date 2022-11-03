@@ -21,6 +21,6 @@
 # 개발 환경
 - 개발환경 : Windows 10
 - 개발도구 : Eclipse
-- 구성환경 : Spring boot, React.js, React-router, JPA, Hibernate, Mysql
+- 구성환경 : Spring boot, React.js, React-router, JPA, Hibernate, MariaDB
 
 # 실행 스크린 샷
