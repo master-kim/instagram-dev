@@ -45,8 +45,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FollowServiceImpl implements IFollowService {
     
-    private final IFollowRepository ifollowrepository;
-    
     private final IUserRepository iuserrepository;
     
     public List<UserEntity> followList(String sessionUserId) throws Exception {
@@ -55,7 +53,7 @@ public class FollowServiceImpl implements IFollowService {
         List<UserEntity> resultList = new ArrayList<>();
         
         // 해당 유저에 대한 followList를 가져오는 스트링 배열 (공통 함수 처리)
-        List<String> strList = CommonUtils.followList(sessionUserId , ifollowrepository);
+        List<String> strList = CommonUtils.followList(sessionUserId);
             
         // 실질적인 결과 값
         resultList = iuserrepository.findByUserIdNotIn(strList);

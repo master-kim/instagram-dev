@@ -33,9 +33,9 @@ public class UserServiceImpl implements IUserService {
     
     private final IUserRepository iuserrepository;
     
-    private final IFollowRepository ifollowrepository;
-    
     private final IPostRepository ipostrepository;
+    
+    private final IFollowRepository ifollowrepository;
     
     //전체 리스트 조회
     public List<UserEntity> findAll() {
@@ -123,7 +123,7 @@ public class UserServiceImpl implements IUserService {
         
         // 2단계 : 해당 유저에 대한 followList를 가져오는 스트링 배열 (공통 함수 이용)
         //      : -1 이유 CommonUtils.followList 에는 나 자신을 포함하므로 나 자신을 빼기위함.
-        List<String> strList = CommonUtils.followList(userId , ifollowrepository);
+        List<String> strList = CommonUtils.followList(userId);
         int followCnt = strList.size() - 1;
         
         // 3단계 : 해당 유저가 올린 게시글 개수 체크 및 게시물 리스트 가져오기

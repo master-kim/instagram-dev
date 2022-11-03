@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+
+// CookiesProvider 선언
 import { CookiesProvider } from 'react-cookie';
 
 /* 

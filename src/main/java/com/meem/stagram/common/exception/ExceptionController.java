@@ -1,4 +1,4 @@
-package com.meem.stagram.common.utils;
+package com.meem.stagram.common.exception;
 
 import java.util.List;
 import java.util.stream.Collectors;

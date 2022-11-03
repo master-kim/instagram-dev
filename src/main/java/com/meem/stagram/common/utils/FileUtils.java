@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.meem.stagram.file.FileEntity;
@@ -18,26 +19,23 @@ import lombok.RequiredArgsConstructor;
  * 작업일          작업자    작업내용
  * ------------------------------------------------------------- 
  * 2022.10.27    김요한    최초작성 
+ * 2022.11.03    김요한    IFileRepository 공통 선언
  * -------------------------------------------------------------
  */
 
 @RequiredArgsConstructor
 public class FileUtils {
     
-    // 작동안함...
-    //@Autowired
-    //public final static IFileRepository ifilerepository2;
-    //public static IFileRepository ifilerepository2;
-    //private final IFileRepository ifilerepository;
+    public static IFileRepository ifilerepository;
     
     /**
      *  전역변수 선언(객체변수)   - 같은 클래스에서 호출 가능  -> 예제 : String test = "";
      *  전역변수 선언(클래스변수)  - 다른 클래스에서 호출 가능  -> 예제 : static String test = "";
      * */
-    private final static String fileFolderPath = "C:\\dev\\workspace\\instagram-frontend\\src\\assets\\uploadimg";
+    public static String fileFolderPath = "C:\\dev\\workspace\\instagram-dev\\frontend\\src\\assets\\uploadimg\\";
     
     // 2022.10.27.김요한.추가 - 파일 생성
-    public static HashMap<String, Object> fileCreate(String i_folder, String i_common_id, MultipartFile i_file_info , IFileRepository ifilerepository) throws Exception{
+    public static HashMap<String, Object> fileCreate(String i_folder, String i_common_id, MultipartFile i_file_info) throws Exception{
         
         /**
          * 변수 정보 
@@ -90,6 +88,7 @@ public class FileUtils {
             
             // 9. DB 파일 테이블에 저장
             ifilerepository.save(fileSaveInfo).getFileId();
+            //ifilerepository2.save(fileSaveInfo).getFileId();
             
         } catch(IOException ex){
             resultList.put("resultCd", "FAIL");
@@ -100,7 +99,7 @@ public class FileUtils {
     }
 
  // 2022.10.27.김요한.추가 - 파일 생성
-    public static HashMap<String, Object> fileUpdate(String i_folder, String i_common_id, MultipartFile i_file_info , IFileRepository ifilerepository) throws Exception{
+    public static HashMap<String, Object> fileUpdate(String i_folder, String i_common_id, MultipartFile i_file_info) throws Exception{
         
         /**
          * 변수 정보 

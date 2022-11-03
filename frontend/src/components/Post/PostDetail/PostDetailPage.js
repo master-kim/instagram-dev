@@ -1,17 +1,16 @@
-// 해당 페이지 css import
+// React 선언
+import React, { useState} from 'react';
+// 해당 페이지 css
 import './PostDetailPage.css'
-
 // 해당페이지 아이콘
 import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import {IoMdHeartEmpty} from 'react-icons/io'
 import {BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
-
-// navigate , cookies , useState , useEffect , commonAxios 사용 위한 import
-import { useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
-import React, { useState , useEffect } from 'react';
-import commonAxios from '../../../commonAxios';
+// navigate , cookies , Axios , modal
+import {useNavigate} from "react-router-dom";
+import {useCookies}  from 'react-cookie';
+import Axios           from '../../../commonUtils/Axios';
 
 /* 
  * 설명 : PostDetailPage
@@ -20,6 +19,7 @@ import commonAxios from '../../../commonAxios';
  * ------------------------------------------------------------- 
  * 2022.10.20   김영일    최초작성 
  * 2022.11.03   김요한    소스 통합 및 수정 
+ * 2022.11.03    김요한    소스 정리
  * -------------------------------------------------------------
  */
 

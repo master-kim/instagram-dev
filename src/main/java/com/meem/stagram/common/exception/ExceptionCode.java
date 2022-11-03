@@ -1,4 +1,4 @@
-package com.meem.stagram.common.utils;
+package com.meem.stagram.common.exception;
 
 import lombok.Getter;
 

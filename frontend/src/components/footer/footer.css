@@ -1,0 +1,13 @@
+.footer-suggestion {
+    margin-top: 25px;
+
+    flex: 1;
+}
+
+.footer-suggestion p {
+    font-size: 12px;
+    color: var(--tertiary);
+
+    margin-bottom: 15px;
+    cursor: pointer;
+}

@@ -1,7 +1,7 @@
 import axios from 'axios'; // 액시오스
 
 /* 
- * 설명 : commonAxios.js
+ * 설명 : Axios.js
  * ------------------------------------------------------------- 
  * 작업일         작업자    작업내용
  * ------------------------------------------------------------- 
@@ -10,7 +10,7 @@ import axios from 'axios'; // 액시오스
  * -------------------------------------------------------------
 */
 
-export default async function commonAxios(url, params , callback) {
+export default async function Axios(url, params , callback) {
 
   await axios(
     {

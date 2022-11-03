@@ -9,6 +9,11 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import com.meem.stagram.follow.FollowEntity;
 import com.meem.stagram.follow.IFollowRepository;
+import com.meem.stagram.post.IPostRepository;
+import com.meem.stagram.story.IStoryRepository;
+import com.meem.stagram.user.IUserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 설명 : CommonUtils.java   (공통 작업 utils 모아두기)
@@ -16,15 +21,27 @@ import com.meem.stagram.follow.IFollowRepository;
  * 작업일          작업자    작업내용
  * ------------------------------------------------------------- 
  * 2022.10.25    김요한    최초작성 
+ * 2022.10.25    김요한    유저에 대한 팔로우인원 리스트 공통 함수 추가 
+ * 2022.11.03    김요한    Repository 공통 선언
  * -------------------------------------------------------------
  */
 
+@RequiredArgsConstructor
 public class CommonUtils {
     
+    public static IFollowRepository ifollowrepository;
+    
+    public static IUserRepository iuserrepository;
+    
+    public static IStoryRepository istoryrepository;
+    
+    public static IPostRepository ipostrepository;
+    
     // 2022.10.25.김요한 - 유저에 대한 팔로우인원 리스트를 뽑는 함수
-    public static List<String> followList(String i_str_user_id, IFollowRepository i_follow_repository) throws Exception{
+    public static List<String> followList(String i_str_user_id) throws Exception{
         
-        List<FollowEntity> followerList = i_follow_repository.findByUserId(i_str_user_id);
+        List<FollowEntity> followerList = ifollowrepository.findByUserId(i_str_user_id);
+        //List<FollowEntity> followerList = i_follow_repository.findByUserId(i_str_user_id);
         
         List<String> strList = new ArrayList<String>();
         

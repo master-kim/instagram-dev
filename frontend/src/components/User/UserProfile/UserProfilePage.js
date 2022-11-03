@@ -1,33 +1,31 @@
-import { Component, useState } from "react";
-
-import Header from "../Header/Header";
-
-import pp1 from "../../images/pp1.png";
-//import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+// React 선언
+import React, { useState , useEffect } from 'react';
+// 해당 페이지 css
+import "./UserProfilePage.css";
+// 헤더 영역
+import Header from "../../Header/Header";
+// 아이콘 영역
 import {IoMdSettings} from 'react-icons/io'
-import {FaHeart } from 'react-icons/fa'
+import {FaHeart} from 'react-icons/fa'
 import {FaComment } from 'react-icons/fa'
-
-import { useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
-import React, { useEffect } from 'react';
-
-import commonAxios from '../../commonAxios';
-
-import "./PersonalPage.css";
+// navigate , cookies , Axios , modal
+import {useNavigate} from "react-router-dom";
+import {useCookies}  from 'react-cookie';
+import Axios         from '../../../commonUtils/Axios';
 
 /* 
- * 설명 : PersonalPage.js
+ * 설명 : UserProfilePage.js
  * ------------------------------------------------------------- 
  * 작업일         작업자    작업내용
  * ------------------------------------------------------------- 
  * 2022.10.13    김영일    최초작성 
  * 2022.10.26    김요한    쿠키추가
  * 2022.10.27    김요한    개인 페이지 프로필 부분 완료 (추후 게시글 이미지 영역 진행 예정)
+ * 2022.11.03    김요한    소스 정리
  * -------------------------------------------------------------
 */
 
-function PersonalPage() {
+function UserProfilePage() {
 	
   // 2022.10.26.김요한 - 쿠키 추가
   const [cookies, setCookie , removeCookie] = useCookies(['loginId']); // 쿠키 훅 
@@ -45,7 +43,7 @@ function PersonalPage() {
           alert('세션이 만료되었습니다.')
           navigate('/login')
       } else {
-        commonAxios('/user/personalPage' , {} , callback);
+        Axios('/user/UserProfile' , {} , callback);
         function callback(data) {
           resultData(data);
           setLoading(false);
@@ -54,6 +52,8 @@ function PersonalPage() {
       return () => {
       };
   }, []); 
+  
+  if (loading) return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
   
   return (
     <>
@@ -141,96 +141,9 @@ function PersonalPage() {
         </div>
         
       </div>
-      {/* <!-- End of gallery --> */}
-      {/* 사진을 불러오는 동안 로더 나오게 함  */}
-      {/* <div className="loader"></div> */}
-
     </div>
-{/* <!-- End of post container --> */}
-
-        {/* <div className="user-Details-Container">
-          <div className="user-Details-content">
-            <div className="profile-container">
-              <img
-                className="profile-img"
-                src={pp1}
-                alt="my profile"
-              />
-
-              <div className="user-post-detail-container">
-                <h1 className="profile-name">Youngil Kim</h1>
-                <ul className="user-follower-container">
-                  <li>
-                    <p className="post-count ">
-                      <span className="count ">5 </span>
-                      posts
-                    </p>
-                  </li>
-                  <li>
-                    <p className="post-count">
-                      <span className="count">32</span>
-                      followers
-                    </p>
-                  </li>
-                  <li>
-                    <p className="post-count">
-                      {" "}
-                      <span className="count ${textColor">
-                        32{" "}
-                      </span>
-                      following
-                    </p>
-                  </li>
-                </ul>
-                <p className="post-count count">afaf</p>
-                <p className="post-count">biobio</p>
-              </div>
-            </div>
-            <div className="users-all-post">
-              <ul className="user-story-container">
-              {/* 올렸던 스토리들이 모아지는 곳입니다 */}
-                {/* {storyDetails.map((eachStory) => (
-                  <li key={eachStory.id} className="story-item">
-                    <img
-                      className="user-story"
-                      src={eachStory.image}
-                      alt="my story"
-                    />
-                  </li>
-                ))} */}
-              {/* </ul>
-            </div>
-            <div className="user-all-post-container">
-              <div className="users-all-post">
-           
-                <h1 className="post-count">Posts</h1>
-              </div> */}
-              {/* 포스트 했던 사진들이 보이는 곳입니다 */}
-              {/* {postDetails.length > 0 ? (
-                <ul className="all-post-container">
-                  {postDetails.map((eachPost) => (
-                    <li className="all-post-img" key={eachPost.id}>
-                      <img
-                        className="posted-img"
-                        src={eachPost.image}
-                        alt="my post"
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <div className="no-post-container">
-                  <BiCamera className="No-post-available" />
-                  <h1 className="post-count">No Posts Yet</h1>
-                </div>
-              )} */}
-            {/* </div>
-              
-          </div>
-        </div> */}
-     
     </>
   );
 }
 
-export default PersonalPage;
+export default UserProfilePage;

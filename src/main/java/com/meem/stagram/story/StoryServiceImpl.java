@@ -11,7 +11,6 @@ import com.meem.stagram.common.utils.CommonUtils;
 import com.meem.stagram.common.utils.FileUtils;
 import com.meem.stagram.dto.RequestDTO;
 import com.meem.stagram.file.IFileRepository;
-import com.meem.stagram.follow.IFollowRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,10 +31,6 @@ public class StoryServiceImpl implements IStoryService {
     
     private final IStoryRepository istoryrepository;
     
-    private final IFollowRepository ifollowrepository;
-    
-    private final IFileRepository ifilerepository;
-    
     /**
      * 2022.10.14.김요한 - 비즈니스 로직 (스토리 리스트 가져오는 로직) - 유저에 대한 팔로우인원에 대한 스토리 올린 리스트 불러오기
      * 2022.10.25.김요한 - followlist를 공통함수로 가져오게 처리 
@@ -45,8 +40,8 @@ public class StoryServiceImpl implements IStoryService {
         // 결과값을 담는 배열 선언
         List<StoryEntity> resultList = new ArrayList<>();
         
-        // 해당 유저에 대한 followList를 가져오는 스트링 배열 (공통 함수 처리) --> 사용방법 (user_id , ifollowrepository) 를 넘겨주면 가져온다.
-        List<String> strList = CommonUtils.followList(sessionUserId , ifollowrepository);
+        // 해당 유저에 대한 followList를 가져오는 스트링 배열 (공통 함수 처리) --> 사용방법 (user_id) 를 넘겨주면 가져온다.
+        List<String> strList = CommonUtils.followList(sessionUserId);
         
         // 내 스토리 올린거 빼기 (다르게 다룰 예정)
         strList.remove(sessionUserId);
@@ -77,7 +72,7 @@ public class StoryServiceImpl implements IStoryService {
             resultList.put("resultCd" , "FAIL");
             resultList.put("resultMsg" , "게시글 생성이 오류");
         } else {
-            fileResult = FileUtils.fileCreate( folderType , storyResult , fileInfo , ifilerepository);
+            fileResult = FileUtils.fileCreate( folderType , storyResult , fileInfo);
             
             if (fileResult.get("resultCd").toString().toUpperCase().equals("FAIL")) {
                 resultList.put("resultCd" , fileResult.get("resultCd"));

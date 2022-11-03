@@ -1,20 +1,18 @@
-// 해당 페이지 css import
+// React 선언
+import React, { useState , useEffect } from 'react';
+// 해당 페이지 css
  import './PostList.css'
-
-// 헤더 영역 import
+// 헤더 영역
 import Header from "../../Header/Header";
-
-// 해당페이지 아이콘
+// 아이콘 영역
 import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import { IoMdHeartEmpty} from 'react-icons/io'
 import { BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
-
-// navigate , cookies , useState , useEffect , commonAxios 사용 위한 import
+// navigate , cookies , Axios , modal
 import { useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
-import React, { useState , useEffect } from 'react';
-import commonAxios from '../../../commonAxios';
+import { useCookies }  from 'react-cookie';
+import Axios           from '../../../commonUtils/Axios';
 
 /* 
  * 설명 : PostList.js
@@ -25,15 +23,16 @@ import commonAxios from '../../../commonAxios';
  * 2022.10.20    김요한    헤더 영역 추가
  * 2022.10.26    김요한    쿠키 추가
  * 2022.10.28    김요한    컴포넌트 나누어 놓은거 합치기 (백엔드 세번 호출 불필요 -> 1번으로 변경 위함)
+ * 2022.11.03    김요한    소스 정리
  * -------------------------------------------------------------
  */
 
 function PostList() {
 
-    const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
+    const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']);
     const navigate = useNavigate();
 
-    const userId = cookies.loginId; // 쿠키에서 id 를 꺼내기
+    const userId = cookies.loginId;
 
     const [loading, setLoading] = useState(true);
     const [totalList, resultData] = useState([]);
@@ -57,7 +56,7 @@ function PostList() {
             alert('세션이 만료되었습니다.')
             navigate('/login')
         } else {
-            commonAxios('/post/postList' , {} , callback);
+            Axios('/post/postList' , {} , callback);
 
             function callback(data) {
                 resultData(data);
