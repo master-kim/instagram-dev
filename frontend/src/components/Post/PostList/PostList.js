@@ -1,26 +1,21 @@
-import Header from "../../Header/Header";
-import './PostList.css'
+// 해당 페이지 css import
+ import './PostList.css'
 
-/** 
- * 포스트 관련 import 
- */
+// 헤더 영역 import
+import Header from "../../Header/Header";
+
+// 해당페이지 아이콘
 import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import { IoMdHeartEmpty} from 'react-icons/io'
 import { BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 
-/* 파일 3개로 나누면 백엔드 3번 호출로 인해 불필요 
-import { StoryList } from '../StoryList/StoryList'
-import { PostList } from '../PostList/PostList'
-import { SuggestionList } from '../SuggestionList/SuggestionList' */
- 
-/** 
- * navigate , cookies , useState , useEffect , commonAxios 사용 위한 import
- */
+// navigate , cookies , useState , useEffect , commonAxios 사용 위한 import
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import React, { useState , useEffect } from 'react';
 import commonAxios from '../../../commonAxios';
+
 /* 
  * 설명 : PostList.js
  * ------------------------------------------------------------- 

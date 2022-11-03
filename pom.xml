@@ -143,6 +143,14 @@
                             <arguments>install</arguments>
                         </configuration>
                     </execution>
+                    <!-- webpack 빌드
+                    <execution>
+                        <id>webpack build</id>
+                        <goals>
+                            <goal>webpack</goal>
+                        </goals>
+                    </execution>
+                     -->
                     <!-- npm 빌드 -->
                     <execution>
                         <id>npm run build</id>
@@ -167,6 +175,7 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <!-- Spring boot의 html 파일 경로 -->
+                            <!-- <outputDirectory>${project.build.outputDirectory}/static</outputDirectory> -->
                             <outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
                             <resources>
                                 <resource>

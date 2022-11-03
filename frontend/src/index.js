@@ -3,6 +3,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { CookiesProvider } from 'react-cookie';
 
+/* 
+ * 설명 : index.js
+ * ------------------------------------------------------------- 
+ * 작업일         작업자    작업내용
+ * ------------------------------------------------------------- 
+ * 2022.10.11   김요한    최초작성
+ * 2022.10.26   김요한    CookiesProvider (모든 페이지에 쿠키 사용 위해)
+ * -------------------------------------------------------------
+*/
+
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider> 
@@ -11,22 +21,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// 아래는 기존 설정 불필요함
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import './index.css';
-// import App from './App';
-// import reportWebVitals from './reportWebVitals';
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
-
-// // If you want to start measuring performance in your app, pass a function
-// // to log results (for example: reportWebVitals(console.log))
-// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();

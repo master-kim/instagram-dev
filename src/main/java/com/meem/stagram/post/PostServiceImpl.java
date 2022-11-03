@@ -7,12 +7,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.meem.stagram.common.utils.CommonUtils;
+import com.meem.stagram.common.utils.FileUtils;
 import com.meem.stagram.dto.RequestDTO;
 import com.meem.stagram.file.FileEntity;
 import com.meem.stagram.file.IFileRepository;
 import com.meem.stagram.follow.IFollowRepository;
-import com.meem.stagram.utils.CommonUtils;
-import com.meem.stagram.utils.FileUtils;
 
 import lombok.RequiredArgsConstructor;
 

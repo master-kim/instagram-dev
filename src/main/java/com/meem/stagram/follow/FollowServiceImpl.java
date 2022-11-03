@@ -5,12 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.meem.stagram.dto.RequestDTO;
-import com.meem.stagram.post.IPostRepository;
-import com.meem.stagram.story.IStoryService;
+import com.meem.stagram.common.utils.CommonUtils;
 import com.meem.stagram.user.IUserRepository;
 import com.meem.stagram.user.UserEntity;
-import com.meem.stagram.utils.CommonUtils;
 
 import lombok.RequiredArgsConstructor;
 

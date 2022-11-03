@@ -24,7 +24,7 @@ import Modal from '../Common/Modal';
 
 function LoginPage(props) {
 
-	const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
+  const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']); // 쿠키 훅 
 
   /* 2022.11.01.김요한.추가 - 모달창 노출 여부 */
   const [modalOpen, setModalOpen] = useState(false);
@@ -78,7 +78,7 @@ function LoginPage(props) {
   }
 
   return (
-    <>
+    <div>
       <Modal open={modalOpen} close={closeModal} header="로그인">
         <main> {props.children} </main>
         {resultData.map((result) => (
@@ -125,7 +125,7 @@ function LoginPage(props) {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 export default LoginPage;

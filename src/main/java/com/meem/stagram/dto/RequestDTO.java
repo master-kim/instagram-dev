@@ -47,13 +47,6 @@ public class RequestDTO {
         @NotNull
         @NotEmpty(message = "유저 비밀번호에는 공백문자 또는 빈 값은 불가능합니다.")
         private String userPwd;
-        
-        @Builder
-        public userLogin(String i_user_id, String i_user_pwd) {
-            this.userId = i_user_id;
-            this.userPwd = i_user_pwd;
-        }
-        
     }
     
     // 2022.10.24.김요한.추가 - UserRegister 시 담는 영역
@@ -92,17 +85,6 @@ public class RequestDTO {
         @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "핸드폰 번호는 10 ~ 11 자리의 숫자만 입력 가능합니다.")
         @NotEmpty(message = "유저 핸드폰 부분에는 공백문자 또는 빈 값은 불가능합니다.")
         String userPhone;
-        
-        @Builder
-        public userRegister(String i_user_id, String i_user_nick , String i_user_name, String i_user_pwd, String i_user_pwd_chk, String i_user_email, String i_user_phone) {
-            this.userId = i_user_id;
-            this.userNick = i_user_nick;
-            this.userName = i_user_name;
-            this.userPwd = i_user_pwd;
-            this.userPwdChk = i_user_pwd_chk;
-            this.userEmail = i_user_email;
-            this.userPhone = i_user_phone;
-        }
         
     }
     

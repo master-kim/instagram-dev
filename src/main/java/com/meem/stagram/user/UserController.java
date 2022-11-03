@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +20,8 @@ import com.meem.stagram.dto.RequestDTO;
 
 import lombok.RequiredArgsConstructor;
 
-
-
 /**
- * 설명 : UserController.java > 최초 react.js > axios 이용 연결 컨트롤러    
+ * 설명 : UserController.java
  * ------------------------------------------------------------- 
  * 작업일          작업자    작업내용
  * ------------------------------------------------------------- 
@@ -39,7 +39,7 @@ public class UserController {
     private final IUserService iuserservice;
     
     /**
-     * 2022.10.17.김요한.추가 - 스토리 게시판 가져오는 컨트롤러 생성
+     * 2022.10.17.김요한.추가 - 로그인 프로세스 관리 컨트롤러
      * 2022.10.24.김요한.추가 - @Valid 추가 - 잘못 입력시 Exception 오류 처리
      * */
     @PostMapping("/userLogin")
@@ -50,12 +50,12 @@ public class UserController {
         String userId = userLogin.getUserId().toString();
         session.setAttribute("user_id", userId);
         
+        // 결과 값을 담는 변수 선언
         List<HashMap<String, Object>> resultList = new ArrayList<>();
-        
         HashMap<String, Object> resultMap = new HashMap<>();
         
         try {
-            // 해당 유저 데이터가 맞는지 확인
+            // 해당 유저에 대한 유효한 아이디 및 패스워드 점검처리
             resultMap = iuserservice.findByUserId(userLogin);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,15 +63,16 @@ public class UserController {
             resultMap.put("resultMsg", e.getMessage().toString());
         }
         
+        // 결과 List에 결과Map 담기
         resultList.add(resultMap);
         
         return resultList;
     }
     
     /**
-     * 2022.10.26.김요한.추가 - 로그아웃
+     * 2022.10.26.김요한.추가 - 로그아웃 프로세스 관리 컨트롤러
      * */
-    @GetMapping("/userLogout")
+    @PostMapping("/userLogout")
     public HashMap<String, Object> userLogout(HttpServletRequest request) throws Exception{
         
         HashMap<String, Object> resultMap = new HashMap<>();
