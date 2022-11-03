@@ -51,7 +51,6 @@
       padding: 64px 48px 64px 48px;
     }
   }
-  
   .input-container {
     display: flex;
     flex-direction: column;
@@ -67,62 +66,7 @@
     line-height: 16px;
     color: #475569;
   }
-  .userid-input-field {
-    font-size: 14px;
-    height: 40px;
-    border: 1px solid #d7dfe9;
-    background-color: #e2e8f0;
-    color: #64748b;
-    border-radius: 2px;
-    margin-top: 5px;
-    padding: 8px 16px 8px 16px;
-    outline: none;
-  }
-  .username-input-field {
-    font-size: 14px;
-    height: 40px;
-    border: 1px solid #d7dfe9;
-    background-color: #e2e8f0;
-    color: #64748b;
-    border-radius: 2px;
-    margin-top: 5px;
-    padding: 8px 16px 8px 16px;
-    outline: none;
-  }
-  .usernickname-input-field {
-    font-size: 14px;
-    height: 40px;
-    border: 1px solid #d7dfe9;
-    background-color: #e2e8f0;
-    color: #64748b;
-    border-radius: 2px;
-    margin-top: 5px;
-    padding: 8px 16px 8px 16px;
-    outline: none;
-  }
-  .password-input-field {
-    font-size: 14px;
-    height: 40px;
-    border: 1px solid #d7dfe9;
-    background-color: #e2e8f0;
-    color: #64748b;
-    border-radius: 2px;
-    margin-top: 5px;
-    padding: 8px 16px 8px 16px;
-    outline: none;
-  }
-  .email-input-field {
-    font-size: 14px;
-    height: 40px;
-    border: 1px solid #d7dfe9;
-    background-color: #e2e8f0;
-    color: #64748b;
-    border-radius: 2px;
-    margin-top: 5px;
-    padding: 8px 16px 8px 16px;
-    outline: none;
-  }
-  .phone-input-field {
+  .input-field {
     font-size: 14px;
     height: 40px;
     border: 1px solid #d7dfe9;
@@ -147,7 +91,6 @@
     cursor: pointer;
     outline: none;
   }
-  
   .error-message {
     align-self: start;
     font-size: 12px;

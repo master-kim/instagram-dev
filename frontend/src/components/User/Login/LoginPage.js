@@ -33,14 +33,16 @@ function LoginPage(props) {
      * 프론트 , 백엔드 데이터 송/수신 내역 작성 영역
      * 
      * 프론트엔드 request 데이터 형태
-     * inputData = { ""userId"" : "test" , "userPwd" : "test"}
-     
+     * inputData = { "userId" : "test" , "userPwd" : "test"}
+     *
      * 백엔드 response 데이터 형태
      * -> 성공 사례 
-     * data : [{
-     *       "resultCd"  : "SUCC",
-     *       "resultMsg"   : "~~~~~"
-     *    }]
+     *    data : [{
+     *              "resultCd"   : "SUCC",
+     *              "resultMsg"  : "~~~~~",
+     *              "userId"     : "test",
+     *              "userNick"   : "로그인닉네임",
+     *           }]
      * -> 실폐 사례
      *     data : 
      *           [{
@@ -74,10 +76,10 @@ function LoginPage(props) {
     });
     const {userId,userPwd} = inputData; 
     const onChange = (e) => {
-      const { value, id } = e.target;  // 우선 e.target 에서 id 과 value 를 추출
+      const { value, id } = e.target;  
       setinputData({
-        ...inputData,                     // 기존의 input 객체를 복사한 뒤
-        [id]: value                    // id 키를 가진 값을 value 로 설정
+        ...inputData,                     
+        [id]: value                   
       });
     };
     // 2022.10.19.김요한.추가 - 백엔드 연결(데이터 송수신)
@@ -97,32 +99,32 @@ function LoginPage(props) {
     
     // 화면 영역
     return (
-      <div>
-          <Modal open={modalOpen} close={closeModal} header="로그인">
-            <main> {props.children} </main>
-            {modalData.map((result) => (
-              <span>{result.resultMsg}<br/></span>
-            ))}
-          </Modal>
-          <div className="login--form-container">
-              <img className="login-img" src={insta_image} alt="website login" />
-              <form className="form-container" onSubmit={handleSubmit}>
-                  <img className="login-website-logo-desktop-img" src={insta_logo} alt="logo img"/>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="userId">유저 아이디</label>
-                      <input type="text"id="userId" className="username-input-field" onChange={onChange} value={userId} placeholder="아이디를 입력해주세요."/>
-                  </div>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="userPwd">유저 비밀번호</label>
-                      <input type="password" id="userPwd" className="password-input-field" onChange={onChange} value={userPwd} placeholder="비밀번호를 입력해주세요."/>
-                  </div>
-                  <button className="login-button" type="submit">로그인</button>
-                  <button className="login-button" type="button" onClick={() => pageMove('/signup')}>회원가입</button>
-                  <button className="login-button" type="button" onClick={() => pageMove('/find')}>아이디 & 비밀번호 찾기</button>
-              </form>
-          </div>
-          {/*<Footer /> */}
+      <>
+      <Modal open={modalOpen} close={closeModal} header="로그인">
+        <main> {props.children} </main>
+        {modalData.map((result) => (
+          <span>{result.resultMsg}<br/></span>
+        ))}
+      </Modal>
+      <div className="login--form-container">
+          <img className="login-img" src={insta_image} alt="website login" />
+          <form className="form-container" onSubmit={handleSubmit}>
+              <img className="login-website-logo-desktop-img" src={insta_logo} alt="logo img"/>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="userId">유저 아이디</label>
+                  <input type="text"id="userId" className="input-field" onChange={onChange} value={userId} placeholder="아이디를 입력해주세요."/>
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="userPwd">유저 비밀번호</label>
+                  <input type="password" id="userPwd" className="input-field" onChange={onChange} value={userPwd} placeholder="비밀번호를 입력해주세요."/>
+              </div>
+              <button className="login-button" type="submit">로그인</button>
+              <button className="login-button" type="button" onClick={() => pageMove('/signup')}>회원가입</button>
+              <button className="login-button" type="button" onClick={() => pageMove('/find')}>아이디 & 비밀번호 찾기</button>
+          </form>
       </div>
+      {/*<Footer /> */}
+      </>
     );
 }
 export default LoginPage;
