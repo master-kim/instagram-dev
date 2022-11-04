@@ -21,7 +21,7 @@ public interface IUserService {
 
     HashMap<String, Object> userSave(@Valid RequestDTO.userRegister userRegister) throws Exception;
 
-    HashMap<String, Object> findByPersnolPage(String userId) throws Exception;
+    HashMap<String, Object> findUserProfile(String userId) throws Exception;
     
 
 }

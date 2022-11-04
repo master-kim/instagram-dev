@@ -24,19 +24,12 @@ import Axios           from '../../../commonUtils/Axios';
  * 2022.10.26    김요한    쿠키 추가
  * 2022.10.28    김요한    컴포넌트 나누어 놓은거 합치기 (백엔드 세번 호출 불필요 -> 1번으로 변경 위함)
  * 2022.11.03    김요한    소스 정리
+ * 2022.11.04    김요한    파일 데이터 바인딩 추가
  * -------------------------------------------------------------
  */
 
 function PostList() {
 
-    const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']);
-    const navigate = useNavigate();
-
-    const userId = cookies.loginId;
-
-    const [loading, setLoading] = useState(true);
-    const [totalList, resultData] = useState([]);
-    
     /**
      * 2022.10.28.김요한.추가 - 프론트 , 백엔드 데이터 송/수신 내용
      * 
@@ -47,11 +40,23 @@ function PostList() {
      * -> totalList : {
      *       "storyList"  : {.... , .... },
      *       "postList"   : {.... , .... } ,
+     *       "fileList"   : {.... , .... } ,
      *       "followList" : {.... , .... } 
      *    }
      */
-    useEffect(() => {
+     
+    // 2022.10.26.김요한.추가 - 쿠키 훅 추가
+    const [cookies, setCookie , removeCookie] = useCookies(['loginCookie']);
+    const userId = cookies.loginId;
+    
+    //2022.10.19.김요한.추가 - 페이지 이동(navigate)
+    const navigate = useNavigate();
 
+    //2022.10.19.김요한.추가 - 페이지 로딩
+    const [loading, setLoading] = useState(true);
+    const [totalList, resultData] = useState([]);
+    
+    useEffect(() => {
         if (userId === undefined) {
             alert('세션이 만료되었습니다.')
             navigate('/login')
@@ -86,7 +91,6 @@ function PostList() {
                                 {totalList.storyList.map((story) => (
                                     <div className="user-elements" >
                                         <div>
-                                            {/* <img className="image-user-story" src="C:\dev\06.img" alt="profile" /> */}
                                             <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
                                         </div>
                                         <span style={{textAlign: "center"}}>{story.userentity.userNick}</span>       
@@ -95,7 +99,7 @@ function PostList() {
                             </div>
                         </div>
                         {/* 게시글 영역 */}
-                        {totalList.postList.map((post) => (
+                        {totalList.postList.map((post , index) => (
                             <div className="box" style={{margin: "30px 0"}} >
                                 <header className="header-post" >
                                     <div className="infos-post" >
@@ -106,7 +110,7 @@ function PostList() {
                                         <FiMoreHorizontal />
                                 </header>
                                 <div className="img-post" >
-                                    <img src="https://github.com/maykbrito.png" alt="profile"/>
+                                    <img src={totalList.fileList[index].uuidFileNm} alt="profile"/>
                                 </div>
                                 <div className="footer-post" >
                                 <IconContext.Provider value={{size: "30px"}} >

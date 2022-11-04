@@ -15,6 +15,7 @@ import com.meem.stagram.post.PostEntity;
  * ------------------------------------------------------------- 
  * 2022.10.27    이강현    최초작성 
  * 2022.10.27    김요한    소스정리
+ * 2022.11.04    김요한    findByCommonIdInAndFileFolderType 파일 정보 리스트로 불러오기 추가
  * -------------------------------------------------------------
  */
 
@@ -26,4 +27,6 @@ public interface IFileRepository extends JpaRepository<FileEntity, Long>{
     FileEntity findByCommonIdAndFileFolderType(String commonId , String folderType) throws Exception;
     
     List<FileEntity> findByCommonIdIn(List<String> commonIdList) throws Exception;
+
+    List<FileEntity> findByCommonIdInAndFileFolderType(List<String> commonIdList, String folderType);
 }

@@ -22,128 +22,112 @@ import Axios         from '../../../commonUtils/Axios';
  * 2022.10.26    김요한    쿠키추가
  * 2022.10.27    김요한    개인 페이지 프로필 부분 완료 (추후 게시글 이미지 영역 진행 예정)
  * 2022.11.03    김요한    소스 정리
+ * 2022.11.04    김요한    유저 프로필 올린 게시글 리스트 가져오기 추가
+ * 2022.11.04    김요한    파일 데이터 바인딩 추가
  * -------------------------------------------------------------
 */
 
 function UserProfilePage() {
-	
-  // 2022.10.26.김요한 - 쿠키 추가
-  const [cookies, setCookie , removeCookie] = useCookies(['loginId']); // 쿠키 훅 
-  const navigate = useNavigate();
-
-  const userId = cookies.loginId; // 쿠키에서 id 를 꺼내기
-  const userNick = cookies.loginNick; // 쿠키에서 id 를 꺼내기
-  
-  const [loading, setLoading] = useState(true);
-  const [pernalPageList, resultData] = useState([]);
-  
-  useEffect(() => {
-
-      if (userId === undefined) {
-          alert('세션이 만료되었습니다.')
-          navigate('/login')
-      } else {
-        Axios('/user/UserProfile' , {} , callback);
-        function callback(data) {
-          resultData(data);
-          setLoading(false);
+    
+    /**
+     * 2022.10.28.김요한.추가 - 프론트 , 백엔드 데이터 송/수신 내용
+     * 
+     * 프론트엔드 request 데이터 형태
+     * -> 백엔드에서 Session을 체크하므로 데이터 보낼 필요 없음
+     * 
+     * 백엔드 response 데이터 형태
+     * 성공 사례
+     * -> totalList : {
+     *       "resultCd"     : "SUCC",
+     *       "resultMsg"    : "~~~~~~~~",
+     *       "followCnt"    : {.... , .... },
+     *       "postCnt"      : {.... , .... },
+     *       "userProfile"  : {.... , .... },
+     *       "postList"     : {.... , .... } ,
+     *       "fileList"     : {.... , .... } ,
+     *    }
+     * 
+     * 실패 사례
+     * -> totalList : {
+     *       "resultCd"   : "FAIL",
+     *       "resultMsg"  : "~~~~~~~~",
+     *    }
+     * 
+     */
+     
+    // 2022.10.26.김요한.추가 - 쿠키 훅 추가
+    const [cookies, setCookie , removeCookie] = useCookies(['loginId']);
+    const userId = cookies.loginId; 
+    const userNick = cookies.loginNick;
+    //2022.10.19.김요한.추가 - 페이지 이동(navigate)
+    const navigate = useNavigate();
+    
+    //2022.10.19.김요한.추가 - 페이지 로딩
+    const [loading, setLoading] = useState(true);
+    const [totalList, resultData] = useState([]);
+    
+    useEffect(() => {
+        if (userId === undefined) {
+            alert('세션이 만료되었습니다.')
+            navigate('/login')
+        } else {
+          Axios('/user/UserProfile' , {} , callback);
+          function callback(data) {
+            resultData(data);
+            setLoading(false);
+          }
         }
-      }
-      return () => {
-      };
-  }, []); 
+        return () => {
+        };
+    }, []); 
   
-  if (loading) return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
-  
-  return (
-    <>
-    <Header   />
-    <div className="personalPage-container">
-      <div className="profile">
-        <div className="profile-image">
-          <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="" />
+    if (loading) return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
+    
+    // 화면 영역
+    return (
+        <>
+        <Header />
+        {/* <!-- start of profile section --> */}
+        <div className="personalPage-container">
+            <div className="profile">
+                <div className="profile-image">
+                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="" />
+                </div>
+                <div className="profile-user-settings">
+                    <h1 className="profile-user-name">{userNick}</h1>
+                    <button className="btn profile-edit-btn">프로필 편집</button>
+                    <button className="btn profile-settings-btn" aria-label="profile settings"><IoMdSettings className="setting-btn" aria-hidden="true" /></button>
+                </div>
+                <div className="profile-stats">
+                    <ul>
+                        <li><span className="profile-stat-count">{totalList.postCnt}</span> 게시물</li>
+                        <li><span className="profile-stat-count">{totalList.followCnt}</span> 팔로워</li>
+                        <li><span className="profile-stat-count">{totalList.followCnt}</span> 팔로잉</li>
+                    </ul>
+                </div>
+                <div className="profile-bio">
+                    <p><span className="profile-real-name">{userNick}</span> {totalList.userProfile} </p>
+                </div>
+            </div>
         </div>
-        <div className="profile-user-settings">
-          <h1 className="profile-user-name">{userNick}</h1>
-          <button className="btn profile-edit-btn">프로필 편집</button>
-          <button className="btn profile-settings-btn" aria-label="profile settings"><IoMdSettings className="setting-btn" aria-hidden="true" /></button>
+        {/* start post contianer */}
+        <div className="personalPage-container">
+            <div className="gallery">
+                {totalList.postList.map((post, index) => (
+                    <div className="gallery-item" tabIndex="0">
+                        <img src={totalList.fileList.uuidFileNm} className="gallery-image" alt="" />
+                        <div className="gallery-item-info">
+                            <ul>
+                                <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/> 56</li>
+                                <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> 2</li>
+                            </ul>
+                        </div>
+                    </div>
+                ))}        
+            </div>
         </div>
-        <div className="profile-stats">
-          <ul>
-            <li><span className="profile-stat-count">{pernalPageList.postCnt}</span> 게시물</li>
-            <li><span className="profile-stat-count">{pernalPageList.followCnt}</span> 팔로워</li>
-            <li><span className="profile-stat-count">{pernalPageList.followCnt}</span> 팔로잉</li>
-          </ul>
-        </div>
-        <div className="profile-bio">
-          <p><span className="profile-real-name">{userNick}</span> {pernalPageList.userProfile} </p>
-        </div>
-      </div>
-      {/* <!-- End of profile section --> */}
-    </div>
-    {/* <!-- End of container --> */}
-    {/* post contianer */}
-    <div className="personalPage-container">
-      <div className="gallery">
-        <div className="gallery-item" tabIndex="0">
-          <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" className="gallery-image" alt="" />
-          <div className="gallery-item-info">
-            <ul>
-              <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/> 56</li>
-              <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> 2</li>
-            </ul>
-          </div>
-        </div>
-        <div className="gallery-item" tabIndex="0">
-          <img src="https://images.unsplash.com/photo-1497445462247-4330a224fdb1?w=500&h=500&fit=crop" className="gallery-image" alt="" />
-          <div className="gallery-item-info">
-            <ul>
-              <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/>89</li>
-              <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> 5</li>
-            </ul>
-          </div>
-        </div>
-        <div className="gallery-item" tabIndex="0">
-          <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=500&h=500&fit=crop" className="gallery-image" alt="" />
-          <div className="gallery-item-type">
-            <span className="visually-hidden">Gallery</span><i className="fas fa-clone" aria-hidden="true"></i>
-          </div>
-          <div className="gallery-item-info">
-            <ul>
-              <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/>42</li>
-              <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> 1</li>
-            </ul>
-          </div>
-        </div>
-        <div className="gallery-item" tabIndex="0">
-          <img src="https://images.unsplash.com/photo-1502630859934-b3b41d18206c?w=500&h=500&fit=crop" className="gallery-image" alt="" />
-          <div className="gallery-item-type">
-            <span className="visually-hidden">Video</span><i className="fas fa-video" aria-hidden="true"></i>
-          </div>
-          <div className="gallery-item-info">
-            <ul>
-              <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/>38</li>
-              <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> 0</li>
-            </ul>
-          </div>
-        </div>
-        <div className="gallery-item" tabIndex="0">
-          <img src="https://images.unsplash.com/photo-1498471731312-b6d2b8280c61?w=500&h=500&fit=crop" className="gallery-image" alt="" />
-          <div className="gallery-item-type">
-            <span className="visually-hidden">Gallery</span><i className="fas fa-clone" aria-hidden="true"></i>
-          </div>
-          <div className="gallery-item-info">
-            <ul>
-              <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/>47</li>
-              <li className="gallery-item-comments"><span className="visually-hidden">Comments:</span><FaComment className="io-text fa-comment" aria-hidden="true" /> 1</li>
-            </ul>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-    </>
-  );
+        </>
+    );
 }
 
 export default UserProfilePage;

@@ -74,8 +74,8 @@
     gap: 16px;
 }
 
-.img-post img {
-    width: 100%;
+.img-post {
+    width: 100% !important;
     object-fit: cover;
 }
 

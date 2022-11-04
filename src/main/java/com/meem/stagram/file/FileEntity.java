@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
  * ------------------------------------------------------------- 
  * 2022.10.27    이강현    최초작성 
  * 2022.10.27    김요한    소스정리
+ * 2022.10.27    김요한    fileLocation 추가
  * -------------------------------------------------------------
  */
 
@@ -37,6 +38,7 @@ public class FileEntity {
     private String     commonId;
     private String     fileNm;
     private String     uuidFileNm;
+    private String     fileLocation;
     private String     fileType;
     private String     fileStatus;
     private String     fileFolderType;
@@ -51,6 +53,7 @@ public class FileEntity {
         FileEntity.commonId       = fileResult.get("common_id").toString();                                             
         FileEntity.fileNm         = fileResult.get("org_file_nm").toString();         
         FileEntity.uuidFileNm     = fileResult.get("uuid_file_nm").toString();        
+        FileEntity.fileLocation   = fileResult.get("file_location").toString();        
         FileEntity.fileType       = fileResult.get("file_type").toString();           
         FileEntity.fileStatus     = "CREATE";                                         
         FileEntity.fileFolderType = fileResult.get("file_folder_type").toString();
@@ -68,7 +71,8 @@ public class FileEntity {
         FileEntity.fileId         = fileList.getFileId();
         FileEntity.commonId       = resultList.get("common_id").toString();                                             
         FileEntity.fileNm         = resultList.get("org_file_nm").toString();         
-        FileEntity.uuidFileNm     = resultList.get("uuid_file_nm").toString();        
+        FileEntity.uuidFileNm     = resultList.get("uuid_file_nm").toString();    
+        FileEntity.fileLocation   = resultList.get("file_location").toString();    
         FileEntity.fileType       = resultList.get("file_type").toString();           
         FileEntity.fileStatus     = "UPDATE";                                         
         FileEntity.fileFolderType = resultList.get("file_folder_type").toString();

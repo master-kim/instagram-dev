@@ -123,7 +123,7 @@ public class UserController {
         String userId = session.getAttribute("user_id").toString();
         
         try {
-            resultMap = iuserservice.findByPersnolPage(userId);
+            resultMap = iuserservice.findUserProfile(userId);
         } catch (Exception e) {
             resultMap.put("resultCd", "FAIL");
             resultMap.put("resultMsg", e.getMessage().toString());

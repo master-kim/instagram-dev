@@ -166,6 +166,7 @@ img {
   margin: 1rem;
   color: #fff;
   cursor: pointer;
+  height: 50%;
 }
 
 .gallery-item:hover .gallery-item-info,

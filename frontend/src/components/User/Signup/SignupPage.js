@@ -21,6 +21,7 @@ import * as commonUtils from "../../../commonUtils/Utils";
  * 2022.10.24    김요한    회원가입 양식 유효성 검증 및 데이터 처리 진행완료
  * 2022.11.01    김요한    모달 팝업 추가
  * 2022.11.03    김요한    소스 정리
+ * 2022.11.04    김요한    프로필 이미지 등록 영역 추가
  * -------------------------------------------------------------
  */
 
@@ -119,41 +120,47 @@ function SignupPage(props) {
             <span>{result.resultMsg}<br/></span>
           ))}
       </Modal>
-          <div className="signup--form-container">
-              <form className="form-container" onSubmit={handleSubmit}>
-                  <img className="signup-website-logo-desktop-img" src={insta_logo} />
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="userid">유저 아이디</label>
-                      <input type="text" id="userId" className="input-field" onChange={onChange} value={userId} placeholder="아이디를 입력해주세요." />
-                  </div>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="username"> 유저 이름 </label>
-                      <input type="text" id="userName" className="input-field" onChange={onChange} value={userName} placeholder="이름을 입력해주세요." />
-                  </div>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="usernickname"> 유저 닉네임 </label> 
-                      <input type="text" id="userNick" className="input-field" onChange={onChange} value={userNick} placeholder="닉네임을 입력해주세요." />
-                  </div>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="password"> 유저 비밀번호 </label>
-                      <input type="password" id="userPwd" className="input-field" onChange={onChange} value={userPwd} placeholder="비밀번호를 입력해주세요." />
-                  </div>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="password-check"> 유저 비밀번호 확인 </label>
-                      <input type="password" id="userPwdChk" className="input-field" onChange={onChange} value={userPwdChk} placeholder="비밀번호를 입력해주세요." />
-                  </div>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="email"> 유저 이메일 </label>
-                      <input type="email" id="userEmail" className="input-field" onChange={onChange} value={userEmail} placeholder="이메일을 입력해주세요."/>
-                  </div>
-                  <div className="input-container">
-                      <label className="input-label" htmlFor="phone"> 유저 핸드폰 </label>
-                      <input type="text" id="userPhone" className="input-field" onChange={onChange} value={userPhone} placeholder="핸드폰 번호를 입력해주세요." />
-                  </div>
-                  <button className="register-button" type="submit"> 등록 </button>
-                  <button className="register-button" type="button" onClick={() => pageMove("/login")} > 취소 </button>
-            </form>
-        </div>
+      <div className="signup--form-container">
+          <form className="form-container" onSubmit={handleSubmit}>
+              <img className="signup-website-logo-desktop-img" src={insta_logo} />
+              <div className="signup-profile">
+              <div className="signup-profile-image">
+                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="프로필 사진 추가"/>
+              </div>
+              <div className="signup-profile-user-settings"><button className="btn signup-profile-edit-btn">사진 추가</button></div>
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="userid">유저 아이디</label>
+                  <input type="text" id="userId" className="input-field" onChange={onChange} value={userId} placeholder="아이디를 입력해주세요." />
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="username"> 유저 이름 </label>
+                  <input type="text" id="userName" className="input-field" onChange={onChange} value={userName} placeholder="이름을 입력해주세요." />
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="usernickname"> 유저 닉네임 </label> 
+                  <input type="text" id="userNick" className="input-field" onChange={onChange} value={userNick} placeholder="닉네임을 입력해주세요." />
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="password"> 유저 비밀번호 </label>
+                  <input type="password" id="userPwd" className="input-field" onChange={onChange} value={userPwd} placeholder="비밀번호를 입력해주세요." />
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="password-check"> 유저 비밀번호 확인 </label>
+                  <input type="password" id="userPwdChk" className="input-field" onChange={onChange} value={userPwdChk} placeholder="비밀번호를 입력해주세요." />
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="email"> 유저 이메일 </label>
+                  <input type="email" id="userEmail" className="input-field" onChange={onChange} value={userEmail} placeholder="이메일을 입력해주세요."/>
+              </div>
+              <div className="input-container">
+                  <label className="input-label" htmlFor="phone"> 유저 핸드폰 </label>
+                  <input type="text" id="userPhone" className="input-field" onChange={onChange} value={userPhone} placeholder="핸드폰 번호를 입력해주세요." />
+              </div>
+              <button className="register-button" type="submit"> 등록 </button>
+              <button className="register-button" type="button" onClick={() => pageMove("/login")} > 취소 </button>
+        </form>
+    </div>
       </>
     );
 }
