@@ -51,6 +51,41 @@
       padding: 64px 48px 64px 48px;
     }
   }
+  
+  .signup-profile {
+    margin-bottom: 2rem;
+  }
+  
+  .signup-profile::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  
+  .signup-profile-image {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .signup-profile-image img {
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+  
+  .signup-profile-user-settings {
+    text-align: center;
+    color: rgb(0, 115, 255);
+    font-size: 14px;
+  }
+  .signup-profile-edit-btn {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    border: 0.1rem solid #dbdbdb;
+    border-radius: 0.3rem;
+    padding: 0 2.4rem;
+  }
+
   .input-container {
     display: flex;
     flex-direction: column;

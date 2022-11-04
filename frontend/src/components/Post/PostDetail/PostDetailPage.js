@@ -41,7 +41,7 @@ export default function PostDetailPage() {
     
     useEffect(() => {
       const inputs = { postId: "13" };
-      commonAxios('/post/postDetail', inputs, callback);
+      Axios('/post/postDetail', inputs, callback);
       function callback(data) {
         resultData(data);
         setLoading(false);
@@ -70,7 +70,7 @@ export default function PostDetailPage() {
                         <div className="post-detail-username">
                           <div className="infos-post">
                               <img className="img-header-post"  src={`${totalList.fileInfo[0].uuidFileNm}`}  alt="post"  />
-                              <p>{postList.postInfo.userId}</p>
+                              <p>{totalList.postInfo.userId}</p>
                           </div>
                           <FiMoreHorizontal className="info-button" />
                           </div>

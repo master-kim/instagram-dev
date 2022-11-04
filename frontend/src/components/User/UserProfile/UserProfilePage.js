@@ -115,7 +115,7 @@ function UserProfilePage() {
             <div className="gallery">
                 {totalList.postList.map((post, index) => (
                     <div className="gallery-item" tabIndex="0">
-                        <img src={totalList.fileList.uuidFileNm} className="gallery-image" alt="" />
+                        <img src={totalList.fileList[index].fileLocation} className="gallery-image" alt="" />
                         <div className="gallery-item-info">
                             <ul>
                                 <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/> 56</li>

@@ -110,7 +110,7 @@ function PostList() {
                                         <FiMoreHorizontal />
                                 </header>
                                 <div className="img-post" >
-                                    <img src={totalList.fileList[index].uuidFileNm} alt="profile"/>
+                                    <img src={totalList.fileList[index].fileLocation} alt="profile"/>
                                 </div>
                                 <div className="footer-post" >
                                 <IconContext.Provider value={{size: "30px"}} >
