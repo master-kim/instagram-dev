@@ -128,9 +128,9 @@ public class UserServiceImpl implements IUserService {
         // 1단계 : 해당 유저에 대한 정보 가져오기 (클라이언트에 필요 정보 : userNick , userProfile , followerList)
         List<UserEntity> userList = iuserrepository.findByUserId(userId);
         
-        // 2단계 : 해당 유저에 대한 followList를 가져오는 스트링 배열 (공통 함수 이용)
-        //      : -1 이유 CommonUtils.followList 에는 나 자신을 포함하므로 나 자신을 빼기위함.
-        List<String> strList = CommonUtils.followList(userId);
+        // 2단계 : 해당 유저에 대한 followingList를 가져오는 스트링 배열 (공통 함수 이용)
+        //      : -1 이유 CommonUtils.followingList 에는 나 자신을 포함하므로 나 자신을 빼기위함.
+        List<String> strList = CommonUtils.followingList(userId);
         int followCnt = strList.size() - 1;
         
         // 3단계 : 해당 유저가 올린 게시글 개수 체크 및 게시물 리스트 가져오기

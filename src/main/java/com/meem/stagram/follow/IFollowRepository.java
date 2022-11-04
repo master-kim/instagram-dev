@@ -21,5 +21,7 @@ import org.springframework.stereotype.Repository;
 public interface IFollowRepository extends JpaRepository<FollowEntity, Long> {
 
     List<FollowEntity> findByUserId(String userId) throws Exception;
+
+    List<FollowEntity> findByUserIdNot(String userId);
     
 }

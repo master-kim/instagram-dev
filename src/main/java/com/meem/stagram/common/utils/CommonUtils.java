@@ -27,7 +27,8 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.25    김요한    유저에 대한 팔로우인원 리스트 공통 함수 추가 
  * 2022.11.03    김요한    Repository 공통 선언
  * 2022.11.04    김요한    PostList,FileList 통합 및 공통 클래스 선언
- * 2022.11.04    김요한    followList Json Length 비교 Obj 값 비교로 변경
+ * 2022.11.04    김요한    followingList Json Length 비교 Obj 값 비교로 변경 이름변경 : ( followlist ->followingList)
+ * 2022.11.04    김요한    followerList 추가
  * -------------------------------------------------------------
  */
 
@@ -43,9 +44,9 @@ public class CommonUtils {
     public static IPostRepository ipostrepository;
     
     // 2022.10.25.김요한 - 유저에 대한 팔로우인원 리스트를 뽑는 함수
-    public static List<String> followList(String i_str_user_id) throws Exception{
+    public static List<String> followingList(String i_str_user_id) throws Exception{
         
-        List<FollowEntity> followerList = ifollowrepository.findByUserId(i_str_user_id);
+        List<FollowEntity> followingList = ifollowrepository.findByUserId(i_str_user_id);
         //List<FollowEntity> followerList = i_follow_repository.findByUserId(i_str_user_id);
         
         List<String> strList = new ArrayList<String>();
@@ -53,7 +54,7 @@ public class CommonUtils {
         try {
             
             // 4.팔로우 리스트 데이터를 JSONArray로 데이터를 뽑아 결과 값을 맞추어 작성
-            JSONArray jsonArr = new JSONArray(followerList.get(0).followerList);
+            JSONArray jsonArr = new JSONArray(followingList.get(0).followerList);
             
             if (0 < jsonArr.getJSONObject(0).length()) {
                 for (int idx = 0 , listCnt = jsonArr.length(); idx < listCnt; idx++) {   // JSONArray 내 json 개수만큼 for문 동작
@@ -71,8 +72,41 @@ public class CommonUtils {
         
         return strList;
     }
-
- // 2022.11.04.김요한 - postIdList 뽑는 함수
+    
+    // 2022.11.04.김요한 - 팔로워한 유저를 찾는거
+    public static List<String> followerList(String i_str_user_id) throws Exception{
+        
+        List<FollowEntity> userFollowerList = ifollowrepository.findByUserIdNot(i_str_user_id);
+        List<String> strList = new ArrayList<String>();
+        
+        try {
+            if (0 < userFollowerList.size()) {
+                for (int userIdx = 0 , listCnt = userFollowerList.size(); userIdx < listCnt; userIdx++) {   // JSONArray 내 json 개수만큼 for문 동작
+                    
+                    JSONArray jsonArr = new JSONArray(userFollowerList.get(userIdx).followerList);
+                    
+                    for (int followIdx = 0 , arrCnt = jsonArr.length(); followIdx < arrCnt; followIdx++) {   
+                        
+                        JSONObject jsonObject = jsonArr.getJSONObject(followIdx);
+                        
+                        String userId = jsonObject.getString("user_id").toString();
+                        
+                        if (i_str_user_id.equals(userId)) {
+                            strList.add(userFollowerList.get(followIdx).getUserId());            
+                        } else {;}
+                        
+                    }
+                }
+            
+            } else {;}
+            
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return strList;
+    }
+    
+    // 2022.11.04.김요한 - postIdList 뽑는 함수
     public static List<String> postIdList(List<PostEntity> postList) {
         
         List<String> strList = new ArrayList<String>();
@@ -85,7 +119,7 @@ public class CommonUtils {
         return strList;
     }
     
-    // 2022.11.04.김요한 - 게시글 , 파일 리스트 뽑아오기
+    // 2022.11.04.김요한 - 게시글 , 파일 리스트 뽑아오기 -> 현재 사용X
     public static List<HashMap<String, Object>> postListAndFileList(List<PostEntity> postList, List<FileEntity> fileList) {
         
         List<HashMap<String, Object>> resultList = new ArrayList<>();

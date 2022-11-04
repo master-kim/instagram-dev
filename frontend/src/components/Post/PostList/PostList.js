@@ -38,10 +38,10 @@ function PostList() {
      * 
      * 백엔드 response 데이터 형태
      * -> totalList : {
-     *       "storyList"  : {.... , .... },
-     *       "postList"   : {.... , .... } ,
-     *       "fileList"   : {.... , .... } ,
-     *       "followList" : {.... , .... } 
+     *       "storyList"     : {.... , .... },
+     *       "postList"      : {.... , .... } ,
+     *       "fileList"      : {.... , .... } ,
+     *       "followingList" : {.... , .... } 
      *    }
      */
      
@@ -168,9 +168,8 @@ function PostList() {
                                 <span style={{margin: "0 -50px 0 0"}}>모두 보기</span>
                             </div>
                             <div className="user-suggestion" >
-                            {totalList.followList.map((follow, key) => (
+                            {totalList.followingList.map((follow, key) => (
                                     <div className="infos-suggestion" key={key}>
-                                    {/* <img src={`https://github.com/${suggestion.login}.png`} alt="profile"/> */}
                                     <img className="image-user-story" src="https://github.com/peas.png" alt="profile" />
                                     <div className="info-suggestion" >
                                         <span>{follow.userId}</span>

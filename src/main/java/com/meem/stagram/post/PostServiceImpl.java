@@ -62,8 +62,8 @@ public class PostServiceImpl implements IPostService {
         // 결과값을 담는 해시맵
         HashMap<String, Object> resultMap = new HashMap<>();
         
-        // 해당 유저에 대한 followList를 가져오는 스트링 배열 (공통 함수 처리)
-        List<String> strList = CommonUtils.followList(sessionUserId);
+        // 해당 유저에 대한 followingList를 가져오는 스트링 배열 (공통 함수 처리)
+        List<String> strList = CommonUtils.followingList(sessionUserId);
         
         // 실질적인 결과 값
         List<PostEntity> postList = ipostrepository.findByUserIdIn(strList);

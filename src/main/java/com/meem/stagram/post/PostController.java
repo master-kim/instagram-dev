@@ -53,7 +53,7 @@ public class PostController {
             resultMap.put("resultMsg", "성공");
             resultMap.put("postList",  ipostservice.postList(sessionUserId).get("postList"));
             resultMap.put("fileList",  ipostservice.postList(sessionUserId).get("fileList"));
-            resultMap.put("followList",  ifollowservice.followList(sessionUserId));
+            resultMap.put("followingList",  ifollowservice.followingList(sessionUserId));
             resultMap.put("storyList",  istoryservice.storyList(sessionUserId));
             
         } catch (Exception e) {
