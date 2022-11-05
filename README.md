@@ -23,7 +23,7 @@
 - 개발도구 : Eclipse
 - 구성환경 : Spring boot, React.js, React-router, JPA, Hibernate, MariaDB
 
-# 실행 스크린 샷
+# 실행 스크린 샷 (진행중...)
 <div align="left">
   <p> (1) 로그인 얼럿 공통팝업 , (2) 로그인 비밀번호 실패 팝업 , (3) 회원가입 얼럿 공통 팝업 </p>
 	<img src="https://user-images.githubusercontent.com/61484038/200118266-7f0eacd5-45bc-481d-9248-fd74337052d0.PNG" width=32% height="350"/>
