@@ -24,3 +24,14 @@
 - 구성환경 : Spring boot, React.js, React-router, JPA, Hibernate, MariaDB
 
 # 실행 스크린 샷
+<div align="left">
+  <p> (1) 로그인 얼럿 공통팝업 , (2) 로그인 비밀번호 실패 팝업 , (3) 회원가입 얼럿 공통 팝업 </p>
+	<img src="https://user-images.githubusercontent.com/61484038/200118266-7f0eacd5-45bc-481d-9248-fd74337052d0.PNG" width=32% height="350"/>
+	<img src="https://user-images.githubusercontent.com/61484038/200118376-cf924197-fac5-48d3-839b-1e281c987bb8.PNG" width=32% height="350"/>
+  <img src="https://user-images.githubusercontent.com/61484038/200118378-9101b9a6-1430-47c6-83d1-c27c1887fce2.PNG" width=32% height="350"/>
+</div>
+<div align="left">
+  <p> (4) 로그인 화면 , (5) 회원가입 화면 </p>
+	<img src="https://user-images.githubusercontent.com/61484038/200118267-045beffb-bc0c-4399-9a46-903fc61104f7.PNG" width=49% height="350"/>
+	<img src="https://user-images.githubusercontent.com/61484038/200118269-cee82055-2c8b-4a54-a146-9e1145c3125a.PNG" width=49% height="350"/>
+</div>
