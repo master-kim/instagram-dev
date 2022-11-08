@@ -14,6 +14,7 @@ import Axios from '../../../commonUtils/Axios';
  * 작업일         작업자    작업내용
  * ------------------------------------------------------------- 
  * 2022.11.05    김요한    최초작성 
+ * 2022.11.08    김요한    유저프로필 이미지 가져오기 추가 
  * -------------------------------------------------------------
  */
 
@@ -87,7 +88,7 @@ function FollowSuggPage() {
                     <div className="second-column" style={{gridArea: "secondColumn"}}>
                         <div className="container-suggestion">
                             <div className="header-suggestion" >
-                                <img src={cookies.userImg.fileLocation} alt="profile"/>
+                                <img src={cookies.loginUserImg.fileLocation} alt="profile"/>
                                 <div className="user-infos-suggestion" >
                                     <div className="infos" >
                                         <span>{cookies.loginId}</span>
