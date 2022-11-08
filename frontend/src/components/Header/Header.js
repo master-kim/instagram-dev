@@ -27,6 +27,7 @@ import Axios         from '../../commonUtils/Axios';
  * 2022.10.25    김요한    개인페이지 이동 추가
  * 2022.10.26    김요한    로그아웃 아이콘 추가 (로그아웃 기능 추가)
  * 2022.11.03    김요한    소스 정리
+ * 2022.11.08    김요한    유저 프로필 이미지 데이터 바인딩 추가 (쿠키에서 가져오기)
  * -------------------------------------------------------------
 */
 
@@ -52,6 +53,7 @@ function Header(props) {
             navigate('/login')
             removeCookie('loginId');
             removeCookie('loginNick');
+            removeCookie('loginUserImg');
             }  else {;}
             setModalData(data);
             setModalOpen(true);
@@ -70,9 +72,7 @@ function Header(props) {
               </Modal>
             </div>
             <div className="container" >
-                <img className="logo" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="profile" 
-                                    onClick={() => pageMove('/postList')}
-                />
+                <img className="logo" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="profile" onClick={() => pageMove('/postList')}/>
                 <div className="input-fake">
                     <IconContext.Provider value={{ color: '#8e8e8e' }}>
                         <AiOutlineSearch />
@@ -100,7 +100,7 @@ function Header(props) {
                         </div> 
                         - 추후 탐색 기능 추가 여부 논의
                         */}
-                        <img className="img-user" src="https://github.com/gabrieldiasss.png" alt="profile" onClick={() => pageMove('/userProfile')}/>
+                        <img className="img-user" src={cookies.loginUserImg.fileLocation} alt="profile" onClick={() => pageMove('/userProfile')}/>
                         <span onClick={() => pageMove('/userProfile')} >{cookies.loginNick}</span>
                         <div>
                             <FiArrowRightCircle onClick={() => logout()} />

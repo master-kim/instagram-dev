@@ -1,17 +1,18 @@
 package com.meem.stagram.follow;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+
 import com.meem.stagram.dto.RequestDTO.userRegister;
-import com.meem.stagram.post.PostEntity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
  * ------------------------------------------------------------- 
  * 2022.10.01    김요한    최초작성 
  * 2022.10.05    김요한    설명 추가 및 소스 정리
+ * 2022.11.08    김요한    팔로우 맺기 , 끊기 추가
  * -------------------------------------------------------------
  */
 
@@ -43,12 +45,24 @@ public class FollowEntity {
         FollowEntity FollowEntity = new FollowEntity();
         
         FollowEntity.userId          = userRegister.getUserId().toString();
-        FollowEntity.followerList    = "[{}]";
+        FollowEntity.followerList    = "[]";
         FollowEntity.createDt        = LocalDate.now().toString();   
         FollowEntity.updateDt        = LocalDate.now().toString();   
         
         return FollowEntity;
         
+    }
+
+    public static FollowEntity followUpdate(List<FollowEntity> followList, JSONArray jsonArr) {
+        
+       FollowEntity FollowEntity = new FollowEntity();
+        
+        FollowEntity.userId          = followList.get(0).getUserId();
+        FollowEntity.followerList    = jsonArr.toString();
+        FollowEntity.createDt        = followList.get(0).getCreateDt();
+        FollowEntity.updateDt        = LocalDate.now().toString();   
+        
+        return FollowEntity;
     }
     
 }

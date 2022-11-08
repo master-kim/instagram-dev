@@ -1,5 +1,5 @@
 // React 선언
-import React, { useState} from "react";
+import React, { useState , useRef} from "react";
 // 해당 페이지 css
 import "./SignupPage.css";
 // 이미지 영역
@@ -51,45 +51,84 @@ function SignupPage(props) {
      *           }]
      */
      
-    //2022.10.19.김요한.추가 - 페이지 이동(navigate)
-    const navigate = useNavigate();
-    const pageMove = (url) => {
-        navigate(url)
-    }
+     //2022.10.19.김요한.추가 - 페이지 이동(navigate)
+     const navigate = useNavigate();
+     const pageMove = (url) => {
+         navigate(url)
+     }
+     
+     // 2022.11.01.김요한.추가 - 모달창 추가
+     const [modalOpen,setModalOpen] = useState(false);
+     const [modalData,setModalData] = useState([]);
+     const closeModal = () => {
+         setModalOpen(false);
+     };
+     
+     //2022.10.24.김요한.추가 - form 데이터...
+     const [inputData, setinputData] = useState({
+         userId         : '',
+         userNick       : '',
+         userName       :  '',
+         userPwd        : '',
+         userPwdChk     : '',
+         userEmail      : '',
+         userPhone      : ''
+     });
+     const { 
+         userId,    
+         userNick, 
+         userName,  
+         userPwd,   
+         userPwdChk,
+         userEmail, 
+         userPhone 
+     } = inputData; 
+     
+     const onChange = (e) => {
+         const { value, id } = e.target;  
+         setinputData({
+           ...inputData,                     
+           [id]: value                    
+         });
+     };
     
-    // 2022.11.01.김요한.추가 - 모달창 추가
-    const [modalOpen,setModalOpen] = useState(false);
-    const [modalData,setModalData] = useState([]);
-    const closeModal = () => {
-        setModalOpen(false);
-    };
-    //2022.10.24.김요한.추가 - form 데이터...
-    const [inputData, setinputData] = useState({
-      userId         : '',
-      userNick       : '',
-      userName       :  '',
-      userPwd        : '',
-      userPwdChk     : '',
-      userEmail      : '',
-      userPhone      : ''
-    });
-    const { 
-      userId,    
-      userNick, 
-      userName,  
-      userPwd,   
-      userPwdChk,
-      userEmail, 
-      userPhone 
-    } = inputData; 
-    const onChange = (e) => {
-      const { value, id } = e.target;  
-      setinputData({
-        ...inputData,                     
-        [id]: value                    
-      });
-    };
+     const fileInput = useRef(null);
+     const fixedImage = "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces";
+     const [userImage, setUserImage] = useState(fixedImage);
+     const formData = new FormData()
     
+     //const onChange2 = (e) => {
+     //     const { value, id } = e.target;
+     //     
+     //     if(e.target.files){
+     //       const uploadFile = e.target.files[0]
+     //       formData.append('fileInfo',uploadFile)
+     //     }else{;}
+     //      
+     //     if(e.target.files[0]){
+     //         setUserImage(e.target.files[0])
+     //     }else{ //업로드 취소할 시
+     //         setUserImage("https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces")
+     //         return
+     //     }
+     //   //화면에 프로필 사진 표시
+     //   //FileReader 를 통해 비동기로 읽을 수 있음.
+     //   const reader = new FileReader();
+     //   reader.onload = () => {
+     //       if(reader.readyState === 2){
+     //           setUserImage(reader.result)
+     //       }
+     //   }
+     //   reader.readAsDataURL(e.target.files[0])
+     //   
+     //   setInputs({
+     //     ...inputs,
+     //     userImage,
+     //     [id]: value,
+     //   });
+     //       
+     //};
+
     // 2022.10.24.김요한.추가 - 백엔드 연결(데이터 송수신)
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -125,9 +164,12 @@ function SignupPage(props) {
               <img className="signup-website-logo-desktop-img" src={insta_logo} />
               <div className="signup-profile">
               <div className="signup-profile-image">
-                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="프로필 사진 추가"/>
+                  <img src={userImage} alt="userImage" onClick={()=>{fileInput.current.click()}} />
               </div>
-              <div className="signup-profile-user-settings"><button className="btn signup-profile-edit-btn">사진 추가</button></div>
+              <div className="signup-profile-user-settings">
+                  <label className="btn signup-profile-edit-btn" for="userImage" >{userImage==fixedImage?`사진등록`:`취소`}</label>
+                  <input style={{display:"none"}} className="btn signup-profile-edit-btn"  id="userImage" type="file" accept="image/*" name="user_img" onChange={onChange}/>
+              </div>
               </div>
               <div className="input-container">
                   <label className="input-label" htmlFor="userid">유저 아이디</label>

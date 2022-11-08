@@ -7,7 +7,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 /**
@@ -19,6 +18,7 @@ import lombok.Getter;
  * 2022.10.24    김요한    로그인 , 회원가입 DTO 이너클래스 생성 
  * 2022.10.27    이강현    파일 데이터 담는 이너클래스 추가 (3개) - FileCreateRequest , FileUpdateRequest , PostCreateRequest
  * 2022.10.27    김요한    파일 담는 이너클래스 삭제 -> post , story 생성 시 file 관련 정보 가져오도록 변경
+ * 2022.10.27    김요한    게시글 상세보기 담는 클래스 추가
  * -------------------------------------------------------------
  */
 
@@ -86,6 +86,13 @@ public class RequestDTO {
         @NotEmpty(message = "유저 핸드폰 부분에는 공백문자 또는 빈 값은 불가능합니다.")
         String userPhone;
         
+    }
+    
+    // 2022.10.27.김요한.추가 - 게시글 상세보기
+    @Getter
+    public static class postDetail {
+        @NotNull(message = "파일 폳더에 해당하는 데이터를 알려주세요.")
+        private Integer postId;
     }
     
     // 2022.10.27.김요한.추가 - 게시글 작성 (파일 추가)
@@ -163,6 +170,14 @@ public class RequestDTO {
         @NotNull
         private String storyContent;
         
+    }
+    
+    // 2022.11.07.김요한.추가 - 팔로우 리스트 팔로우 걸기
+    @Getter
+    public static class followInfo {
+        @NotNull
+        @NotEmpty(message = "유저 아이디가 정확하지 않습니다.")
+        private String userId;
     }
     
 }

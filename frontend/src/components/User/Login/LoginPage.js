@@ -24,6 +24,7 @@ import Axios         from '../../../commonUtils/Axios';
  * 2022.10.26    김요한    쿠키 훅 추가
  * 2022.11.01    김요한    모달 팝업 추가 ( alert -> modal 팝업 변경)
  * 2022.11.03    김요한    소스 정리
+ * 2022.11.08    김요한    쿠키에 이미지 파일 저장 추가
  * -------------------------------------------------------------
 */
 
@@ -90,6 +91,7 @@ function LoginPage(props) {
             if ( data[0].resultCd === 'SUCC' ) {
               setCookie('loginId', data[0].userId);
               setCookie('loginNick', data[0].userNick);
+              setCookie('loginUserImg', data[0].userImg);
               navigate('/postList')
             } else {;}
             setModalData(data);

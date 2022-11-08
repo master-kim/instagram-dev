@@ -12,7 +12,6 @@ import com.meem.stagram.common.utils.FileUtils;
 import com.meem.stagram.dto.RequestDTO;
 import com.meem.stagram.file.FileEntity;
 import com.meem.stagram.file.IFileRepository;
-import com.meem.stagram.follow.IFollowRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +23,7 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.01    김요한    최초작성 
  * 2022.10.01    김요한    최초작성 
  * 2022.11.04    김요한    파일 정보 가져오기 공통 함수 사용 x 
+ * 2022.11.08    김요한    메인 페이지 파일 가져오기 추가 및 네이밍 변경 
  * -------------------------------------------------------------
  */
 
@@ -58,21 +58,23 @@ public class PostServiceImpl implements IPostService {
     
     // 전체 리스트 조회
     public HashMap<String, Object> postList(String sessionUserId) throws Exception{
-        
-        // 결과값을 담는 해시맵
+        // 결과값을 담는 배열 선언
         HashMap<String, Object> resultMap = new HashMap<>();
         
         // 해당 유저에 대한 followingList를 가져오는 스트링 배열 (공통 함수 처리)
-        List<String> strList = CommonUtils.followingList(sessionUserId);
-        
-        // 실질적인 결과 값
-        List<PostEntity> postList = ipostrepository.findByUserIdIn(strList);
+        List<String> followingList = CommonUtils.followingList(sessionUserId);
+        followingList.add(sessionUserId);
+
+        List<PostEntity> postList = ipostrepository.findByUserIdIn(followingList);
         List<String> postIdList = CommonUtils.postIdList(postList);
-        List<FileEntity> fileList = ifilerepository.findByCommonIdInAndFileFolderType(postIdList , "post");
-        // 순서를 같이 가져오므로 아래 공통 영역 불필요
-        //List<HashMap<String, Object>> resultList = CommonUtils.postListAndFileList(postList, fileList);
+        List<FileEntity> postImgList = ifilerepository.findByCommonIdInAndFileFolderType(postIdList , "post");
+        List<String> userIdList = CommonUtils.postAndUserIdList(postList);
+        List<FileEntity> postUserImgList = ifilerepository.findByCommonIdInAndFileFolderType(userIdList , "user");
+        
+        // 실질적인 결과값
         resultMap.put("postList", postList);
-        resultMap.put("fileList", fileList);
+        resultMap.put("postImgList", postImgList);
+        resultMap.put("postUserImgList", postUserImgList);
         
         return resultMap;
     }

@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.meem.stagram.common.utils.CommonUtils;
 import com.meem.stagram.common.utils.DataCipher;
+import com.meem.stagram.common.utils.FileUtils;
 import com.meem.stagram.dto.RequestDTO;
 import com.meem.stagram.file.FileEntity;
 import com.meem.stagram.file.IFileRepository;
@@ -27,6 +29,8 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.27    김요한    로그인 시 userId , userNick 넘겨주기 추가 
  * 2022.10.27    김요한    유저 프로필 가져오기 (파일 정보 가져오기 추가)
  * 2022.11.04    김요한    파일 정보 가져오기 공통 함수 사용 x 
+ * 2022.11.08    김요한    로그인시 react 쿠키에 담기 위해 유저 프로필 이미지 추가 
+ * 2022.11.08    김요한    유저 프로필 페이지 팔로워,팔로잉 클래스 추가
  * -------------------------------------------------------------
  */
 
@@ -61,7 +65,6 @@ public class UserServiceImpl implements IUserService {
         
         // 암호화 방식 : sha256 단방향 암호화 방식 (salt 함수 사용하지 않고 간단하게 구현) 
         String encUserPwd = DataCipher.encryptDataToString(userLogin.getUserId().toString(), userLogin.getUserPwd().toString());
-        //String encUserPwd = param.get("password").toString();
             
         if (userList.size() == 0) {
             
@@ -76,9 +79,12 @@ public class UserServiceImpl implements IUserService {
                 result.put("resultCd", "SUCC");
                 result.put("resultMsg" , "로그인에 성공하셨습니다.");
                 
+                // 2022.11.08.김요한.추가 - 유저 프로필 이미지 가져오기 추가
+                FileEntity userImgList = ifilerepository.findByCommonIdAndFileFolderType(userLogin.getUserId().toString() , "user");
                 // 2022.10.27.김요한.수정 - 로그인 시 userId , userNick 넘겨주기 추가 
                 result.put("userId", userList.get(0).userId);
                 result.put("userNick" , userList.get(0).userNick);
+                result.put("userImg" , userImgList);
             } else {
                 result.put("resultCd", "FAIL");
                 result.put("resultMsg", "비밀번호가 맞지않습니다.");
@@ -88,9 +94,9 @@ public class UserServiceImpl implements IUserService {
         return result;
     }
     
-    public HashMap<String, Object> userSave(RequestDTO.userRegister userRegister) throws Exception {
+    public HashMap<String, Object> userSave(MultipartFile fileInfo , RequestDTO.userRegister userRegister) throws Exception {
         
-        HashMap<String, Object> result = new HashMap<>();
+        HashMap<String, Object> resultMap = new HashMap<>();
         
         String userId = userRegister.getUserId().toString();
         String userPwd = userRegister.getUserPwd().toString();
@@ -103,35 +109,42 @@ public class UserServiceImpl implements IUserService {
             
             // 유저에 대한 정보 (t_user_info 테이블) 인서트
             UserEntity fileSaveInfo = UserEntity.UserRegister(userRegister , encUserPwd);
-            iuserrepository.save(fileSaveInfo);
-            
+            String saveUserId = iuserrepository.save(fileSaveInfo).getUserId();;
             // 유저에 대한 초기 팔로우 리스트 (t_follow 테이블) 인서트 
             FollowEntity userFollowCreate = FollowEntity.followCreate(userRegister);
             ifollowrepository.save(userFollowCreate);
             
-            result.put("resultCd", "SUCC");
-            result.put("resultMsg", "가입에 성공하셨습니다.");
+            HashMap<String, Object> fileResult = FileUtils.fileCreate( "user" , saveUserId , fileInfo);
+            
+            if (fileResult.get("resultCd").toString().toUpperCase().equals("FAIL")) {
+                resultMap.put("resultCd" , fileResult.get("resultCd"));
+                resultMap.put("resultMsg" , fileResult.get("resultMsg"));
+            } else {
+                resultMap.put("resultCd", "SUCC");
+                resultMap.put("resultMsg", "가입에 성공하셨습니다.");
+            }
             
         } else {
-            result.put("resultCd", "FAIL");
-            result.put("resultMsg", "동일한 아이디가 존재합니다.");
+            resultMap.put("resultCd", "FAIL");
+            resultMap.put("resultMsg", "동일한 아이디가 존재합니다.");
         }
         
-        return result;
+        return resultMap;
     }
 
-    public HashMap<String, Object> findUserProfile(String userId) throws Exception {
+public HashMap<String, Object> findUserProfile(String userId) throws Exception {
         
-        // 결과 값을 담는 해시맵
         HashMap<String, Object> resultMap = new HashMap<>();
         
         // 1단계 : 해당 유저에 대한 정보 가져오기 (클라이언트에 필요 정보 : userNick , userProfile , followerList)
         List<UserEntity> userList = iuserrepository.findByUserId(userId);
         
+        List<String> followerList = CommonUtils.followerList(userId);
+        int followerCnt = followerList.size();
+        
         // 2단계 : 해당 유저에 대한 followingList를 가져오는 스트링 배열 (공통 함수 이용)
-        //      : -1 이유 CommonUtils.followingList 에는 나 자신을 포함하므로 나 자신을 빼기위함.
-        List<String> strList = CommonUtils.followingList(userId);
-        int followCnt = strList.size() - 1;
+        List<String> followingList = CommonUtils.followingList(userId);
+        int followingCnt = followingList.size();
         
         // 3단계 : 해당 유저가 올린 게시글 개수 체크 및 게시물 리스트 가져오기
         List<PostEntity> postList = ipostrepository.findByUserId(userId);
@@ -139,37 +152,18 @@ public class UserServiceImpl implements IUserService {
         
         // 4단계 : 해당 유저가 올린 게시물에 postId를 가져오는 공통 클래스
         List<String> postIdList = CommonUtils.postIdList(postList);
-        // 5단계 : postIdList 를 가지고 해당 파일에 대한 정보를 가져오기
+        // 5단계 : postId만 뽑은 string 배열
         List<FileEntity> fileList = ifilerepository.findByCommonIdInAndFileFolderType(postIdList , "post");
-        // 아래 6단계 필요없음 (데이터를 가져올때 순서대로 가져오기때문에...)
-        // 6단계 : postId + fileId 정보를 만들어주는 공통 클래스 
-        //List<HashMap<String, Object>> resultList = CommonUtils.postListAndFileList(postList, fileList);
         
         resultMap.put("userProfile" , userList.get(0).getUserProfile().toString());
-        resultMap.put("followCnt" , followCnt);                                       
-        resultMap.put("postList" , postList);                                       
-        resultMap.put("fileList" , fileList);                                       
-        resultMap.put("postCnt" , postCnt);                                           
-        resultMap.put("resultCd" , "SUCC");                                           
-        resultMap.put("resultMsg" , "성공했습니다."); 
+        resultMap.put("followingCnt" , followingCnt);
+        resultMap.put("followerCnt" , followerCnt);
+        resultMap.put("postList" , postList);
+        resultMap.put("fileList" , fileList);
+        resultMap.put("postCnt" , postCnt);
+        resultMap.put("resultCd" , "SUCC");
+        resultMap.put("resultMsg" , "성공했습니다.");
         
-        return resultMap;                                                                    
+        return resultMap;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,5 @@
 package com.meem.stagram.story;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.meem.stagram.common.utils.CommonUtils;
 import com.meem.stagram.common.utils.FileUtils;
 import com.meem.stagram.dto.RequestDTO;
+import com.meem.stagram.file.FileEntity;
 import com.meem.stagram.file.IFileRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.14    김요한    최초작성 
  * 2022.10.14    김요한    메인페이지 스토리 리스트 영역 가져오기  
  * 2022.10.25    김요한    공통함수 추가 (팔로우리스트)
+ * 2022.11.08    김요한    스토리 (userimg파일 + 스토리 이미지 파일 가져오기 추가)
  * -------------------------------------------------------------
  */
 
@@ -31,24 +32,29 @@ public class StoryServiceImpl implements IStoryService {
     
     private final IStoryRepository istoryrepository;
     
+    private final IFileRepository ifilerepository;
+    
     /**
      * 2022.10.14.김요한 - 비즈니스 로직 (스토리 리스트 가져오는 로직) - 유저에 대한 팔로우인원에 대한 스토리 올린 리스트 불러오기
      * 2022.10.25.김요한 - followingList를 공통함수로 가져오게 처리 
      * */
-    public List<StoryEntity> storyList(String sessionUserId) throws Exception{
+    public HashMap<String, Object> storyList(String sessionUserId) throws Exception{
         
         // 결과값을 담는 배열 선언
-        List<StoryEntity> resultList = new ArrayList<>();
+        HashMap<String, Object> resultMap = new HashMap<>();
         
-        // 해당 유저에 대한 followingList를 가져오는 스트링 배열 (공통 함수 처리) --> 사용방법 (user_id) 를 넘겨주면 가져온다.
         List<String> strList = CommonUtils.followingList(sessionUserId);
         
-        // 내 스토리 올린거 빼기 (다르게 다룰 예정)
-        strList.remove(sessionUserId);
-        // 실질적인 결과 값
-        resultList = istoryrepository.findByUserIdIn(strList);
+        List<StoryEntity> storyList = istoryrepository.findByUserIdIn(strList);
         
-        return resultList;
+        // 유저 이미지 파일가져오기 작성하면 되는상황
+        List<FileEntity> storyUserImgList = ifilerepository.findByCommonIdInAndFileFolderType(strList , "user");
+        
+        // 추후 실질적인 이미지 가져오는 부분 연결 필요 or 다른 프로세스에 태우기
+        resultMap.put("storyList", storyList);
+        resultMap.put("storyUserImgList", storyUserImgList);
+        
+        return resultMap;
     }
     
     public HashMap<String, Object> storyCreate(MultipartFile fileInfo , RequestDTO.storyCreate storyCreateInfo) throws Exception{

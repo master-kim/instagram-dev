@@ -7,8 +7,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +27,8 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.01    김요한    최초작성 
  * 2022.10.17    김요한    게시판 가져오는 컨트롤러 생성
  * 2022.10.27    김요한    게시글 저장 시 파일 생성 + 게시글 데이터 생성
+ * 2022.10.28    이강현    게시글 상세보기 컨트롤러 생성
+ * 2022.11.08    김요한    게시글 리스트 가져올때 필요 파일 리스트 추가 및 1번호출로 변경
  * -------------------------------------------------------------
  */
 
@@ -47,14 +49,26 @@ public class PostController {
         
         String sessionUserId = request.getSession().getAttribute("user_id").toString();
         
+        
         try {
+            // 2022.11.08.김요한.수정 - 각 영역을 1번만 호출하기 위해 변경
+            HashMap<String, Object> storyInfo = istoryservice.storyList(sessionUserId);
+            HashMap<String, Object> postInfo = ipostservice.postList(sessionUserId);
+            HashMap<String, Object> followInfo = ifollowservice.followSuggList(sessionUserId);
             
             resultMap.put("resultCd", "SUCC");
             resultMap.put("resultMsg", "성공");
-            resultMap.put("postList",  ipostservice.postList(sessionUserId).get("postList"));
-            resultMap.put("fileList",  ipostservice.postList(sessionUserId).get("fileList"));
-            resultMap.put("followingList",  ifollowservice.followingList(sessionUserId));
-            resultMap.put("storyList",  istoryservice.storyList(sessionUserId));
+            
+            resultMap.put("storyList",  storyInfo.get("storyList"));
+            resultMap.put("storyUserImgList",  storyInfo.get("storyUserImgList"));
+            
+            resultMap.put("postList",  postInfo.get("postList"));
+            resultMap.put("postImgList",  postInfo.get("postImgList"));
+            resultMap.put("postUserImgList",  postInfo.get("postUserImgList"));
+            
+            resultMap.put("followSuggList",  followInfo.get("followSuggList"));
+            resultMap.put("followSuggImgList",  followInfo.get("followSuggImgList"));
+            
             
         } catch (Exception e) {
             
@@ -68,9 +82,10 @@ public class PostController {
     
     // 2022.10.28.이강현.추가 - 게시글 상세보기 가져오는 컨트롤러 생성
     @PostMapping("/postDetail")
-    public HashMap<String, Object> postDetail(@RequestParam Integer postId) throws Exception {
-
-        return ipostservice.postDetail(postId);
+    public HashMap<String, Object> postDetail(@RequestBody @Valid RequestDTO.postDetail postDetail) throws Exception {
+        
+        return ipostservice.postDetail(postDetail.getPostId());
+        
     }
     
     // 2022.10.27.김요한.추가 - 게시글 저장 시 파일 생성 + 게시글 데이터 생성

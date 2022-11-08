@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
  * ------------------------------------------------------------- 
  * 2022.10.01    김요한    최초작성 
  * 2022.10.05    김요한    인터페이스에 JpaRepository 연장 추가 
+ * 2022.11.08    김요한    소스정리 
  * -------------------------------------------------------------
  */
 
@@ -22,6 +23,6 @@ public interface IFollowRepository extends JpaRepository<FollowEntity, Long> {
 
     List<FollowEntity> findByUserId(String userId) throws Exception;
 
-    List<FollowEntity> findByUserIdNot(String userId);
+    List<FollowEntity> findByUserIdNot(String userId) throws Exception;
     
 }

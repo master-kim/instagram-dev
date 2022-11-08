@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
  * 2022.11.04    김요한    PostList,FileList 통합 및 공통 클래스 선언
  * 2022.11.04    김요한    followingList Json Length 비교 Obj 값 비교로 변경 이름변경 : ( followlist ->followingList)
  * 2022.11.04    김요한    followerList 추가
+ * 2022.11.08    김요한    postAndUserIdList 통해 userId뽑는 공통함수 추가
  * -------------------------------------------------------------
  */
 
@@ -64,8 +65,6 @@ public class CommonUtils {
             
             } else {;}
             
-            // 5. 내가 올린 스토리, 게시글도 가져오기 위해 결과값에 추가
-            strList.add(i_str_user_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -114,6 +113,19 @@ public class CommonUtils {
         for (int postIdx = 0 , listCnt = postList.size(); postIdx < listCnt; postIdx++) {  
             String postId = postList.get(postIdx).getPostId().toString();
             strList.add(postId);             
+        }
+        
+        return strList;
+    }
+    
+    // 2022.11.08.김요한.추가 - postAndUserIdList 통해 userId뽑는 공통함수 추가
+    public static List<String> postAndUserIdList(List<PostEntity> postList) {
+        
+        List<String> strList = new ArrayList<String>();
+        
+        for (int postIdx = 0 , listCnt = postList.size(); postIdx < listCnt; postIdx++) {  
+            String userId = postList.get(postIdx).getUserentity().getUserId().toString();
+            strList.add(userId);             
         }
         
         return strList;

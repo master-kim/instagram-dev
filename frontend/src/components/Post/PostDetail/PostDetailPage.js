@@ -9,6 +9,7 @@ import { BsChat, BsEmojiSmile, BsBookmark }                  from "react-icons/b
 import { IconContext }                                       from "react-icons/lib";
 // navigate , cookies , Axios , modal
 import Axios           from '../../../commonUtils/Axios';
+import { useLocation } from 'react-router-dom';
 
 /* 
  * 설명 : PostDetailPage
@@ -20,6 +21,7 @@ import Axios           from '../../../commonUtils/Axios';
  * 2022.11.03   김요한    소스 통합 및 수정 
  * 2022.11.03   김요한    소스 정리
  * 2022.11.04   이강현    백엔드연결, 데이터바인딩 완료
+ * 2022.11.05   이강현    게시글 상세 클릭시 페이지 호출 완료
  * -------------------------------------------------------------
  */
 
@@ -39,8 +41,14 @@ export default function PostDetailPage() {
     const [loading, setLoading] = useState(false);
     const [totalList, resultData] = useState([]);
     
+     const location = useLocation();
+     //PostList.js 에서 보내준 파라미터 postId 취득
+     const postId = location.state.postId;
+  
     useEffect(() => {
-      const inputs = { postId: "13" };
+        
+      const inputs = {postId};
+      
       Axios('/post/postDetail', inputs, callback);
       function callback(data) {
         resultData(data);

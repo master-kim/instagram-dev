@@ -87,11 +87,10 @@ function UserProfilePage() {
     return (
         <>
         <Header />
-        {/* <!-- start of profile section --> */}
         <div className="personalPage-container">
             <div className="profile">
                 <div className="profile-image">
-                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="" />
+                    <img src={cookies.loginUserImg.fileLocation} style={{ height: '180px' , width : '180px'}} alt="userProfileImg" />
                 </div>
                 <div className="profile-user-settings">
                     <h1 className="profile-user-name">{userNick}</h1>
@@ -101,8 +100,8 @@ function UserProfilePage() {
                 <div className="profile-stats">
                     <ul>
                         <li><span className="profile-stat-count">{totalList.postCnt}</span> 게시물</li>
-                        <li><span className="profile-stat-count">{totalList.followCnt}</span> 팔로워</li>
-                        <li><span className="profile-stat-count">{totalList.followCnt}</span> 팔로잉</li>
+                        <li><span className="profile-stat-count">{totalList.followerCnt}</span> 팔로워</li>
+                        <li><span className="profile-stat-count">{totalList.followingCnt}</span> 팔로잉</li>
                     </ul>
                 </div>
                 <div className="profile-bio">
@@ -113,9 +112,9 @@ function UserProfilePage() {
         {/* start post contianer */}
         <div className="personalPage-container">
             <div className="gallery">
-                {totalList.postList.map((post, index) => (
-                    <div className="gallery-item" tabIndex="0">
-                        <img src={totalList.fileList[index].fileLocation} className="gallery-image" alt="" />
+                {totalList.postList.map((post, key) => (
+                    <div className="gallery-item" tabIndex="0" key = {key}>
+                        <img src={totalList.fileList[key].fileLocation} className="gallery-image" alt="" />
                         <div className="gallery-item-info">
                             <ul>
                                 <li className="gallery-item-likes"><span className="visually-hidden">Likes:</span><FaHeart className="io-text" aria-hidden="true"/> 56</li>
