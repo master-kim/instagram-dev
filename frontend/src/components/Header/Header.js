@@ -12,10 +12,10 @@ import { IconContext } from 'react-icons'
 //import {MdOutlineExplore} from 'react-icons/md'
 
 // navigate , cookies , Axios , modal
-import {useNavigate} from "react-router-dom";
-import {useCookies}  from 'react-cookie';
-import Modal         from '../Common/Modal';
-import Axios         from '../../commonUtils/Axios';
+import {useNavigate}     from "react-router-dom";
+import {useCookies}      from 'react-cookie';
+import Modal             from '../Common/Modal';
+import * as commonAxios  from '../../commonUtils/Axios';
 
 /* 
  * 설명 : Header.js
@@ -47,7 +47,7 @@ function Header(props) {
     };
     // 2022.10.26.김요한.추가 - 백엔드 연결(데이터 송수신)
     const logout = async () => {
-        await Axios('/user/Logout' , {} , callback);
+        await commonAxios.Axios('/user/Logout' , {} , callback);
         function callback(data) {
             if ( data[0].resultCd === 'SUCC' ) {
             navigate('/login')

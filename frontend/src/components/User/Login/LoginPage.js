@@ -8,10 +8,10 @@ import Footer from "../../footer/footer";
 import insta_image from "../../../images/insta_image.svg";
 import insta_logo  from "../../../images/insta_logo.png";
 // navigate , cookies , Axios , modal
-import {useNavigate} from "react-router-dom";
-import {useCookies}  from 'react-cookie';
-import Modal         from '../../Common/Modal';
-import Axios         from '../../../commonUtils/Axios';
+import {useNavigate}    from "react-router-dom";
+import {useCookies}     from 'react-cookie';
+import Modal            from '../../Common/Modal';
+import * as commonAxios from'../../../commonUtils/Axios';
 
 /* 
  * 설명 : LoginPage.js 
@@ -86,7 +86,7 @@ function LoginPage(props) {
     // 2022.10.19.김요한.추가 - 백엔드 연결(데이터 송수신)
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await Axios('/user/Login' , inputData , callback);
+        await commonAxios.Axios('/user/Login' , inputData , callback);
         function callback(data) {
             if ( data[0].resultCd === 'SUCC' ) {
               setCookie('loginId', data[0].userId);

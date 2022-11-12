@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.26    김요한    로그아웃 추가 (세션 삭제)
  * 2022.11.03    김요한    프론트 데이터 처리 위해 유저로그인 , 회원가입 return 값 변경 ( HashMap -> List<HashMap> )
  * 2022.11.07    김요한    회원가입 시 이미지 파일 추가
+ * 2022.11.12    김요한    회원가입 시 데이터 받는 형식 변경 (@RequestBody -> @RequestPart)
  * -------------------------------------------------------------
  */
 
@@ -93,13 +95,14 @@ public class UserController {
     
     /**
      * 2022.10.21.김요한.추가 - 회원가입 프로세스 컨트롤러
-     * 2022.10.24.김요한.추가 - @Valid 추가 - 잘못 입력시 Exception 오류 처리
-     * 2022.17.07.김요한.추가 - 파일 추가 예정
+     * 2022.10.24.김요한.수정 - @Valid 추가 - 잘못 입력시 Exception 오류 처리
+     * 2022.11.07.김요한.수정 - 파일 추가 예정
+     * 2022.11.12.김요한.수정 - 데이터 받는 형식 변경 (@RequestBody -> @RequestPart)
      * */
     @PostMapping("/SignUp")
     public List<HashMap<String, Object>> SignUp(HttpServletRequest request , 
-            @RequestPart("fileInfo") MultipartFile fileInfo,
-            @RequestPart @Valid RequestDTO.userRegister userRegister
+            @RequestPart("fileInfo") @Valid @NotNull(message = "파일을 넣어주세요.") MultipartFile fileInfo,
+            @RequestPart("userInfo") @Valid RequestDTO.userRegister userRegister
             ) throws Exception{
         
         HttpSession session = request.getSession();
@@ -108,12 +111,12 @@ public class UserController {
         
         HashMap<String, Object> resultMap = new HashMap<>();
         
-        try {
-            resultMap = iuserservice.userSave(fileInfo , userRegister);
-        } catch (Exception e) {
-            resultMap.put("resultCd", "FAIL");
-            resultMap.put("resultMsg", e.getMessage().toString());
-        }
+        //try {
+        //    resultMap = iuserservice.userSave(fileInfo , userRegister);
+        //} catch (Exception e) {
+        //    resultMap.put("resultCd", "FAIL");
+        //    resultMap.put("resultMsg", e.getMessage().toString());
+        //}
         resultMap.put("resultCd", "SUCC");
         
         resultList.add(resultMap);

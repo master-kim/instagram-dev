@@ -5,9 +5,9 @@ import './FollowSuggPage.css'
 // 헤더 영역
 import Header from "../../Header/Header";
 // navigate , cookies , Axios , modal
-import { useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
-import Axios from '../../../commonUtils/Axios';
+import { useNavigate }   from "react-router-dom";
+import { useCookies }    from 'react-cookie';
+import * as commonAxios  from '../../../commonUtils/Axios';
 /* 
  * 설명 : FollowPage.js
  * ------------------------------------------------------------- 
@@ -48,7 +48,7 @@ function FollowSuggPage() {
            alert('세션이 만료되었습니다.')
            navigate('/login')
        } else {
-           Axios('/follow/followSuggList' , {} , callback);
+           commonAxios.Axios('/follow/followSuggList' , {} , callback);
            function callback(data) {
                resultData(data);
                setLoading(false);
@@ -64,7 +64,7 @@ function FollowSuggPage() {
         const followInfo = {
             userId : followId
         }
-        Axios('/follow/doFollow' , followInfo , callback);
+        commonAxios.Axios('/follow/doFollow' , followInfo , callback);
         function callback(data) {
             if (data.resultCd === "SUCC") {
                 window.location.reload();

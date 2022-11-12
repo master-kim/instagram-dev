@@ -9,9 +9,9 @@ import {IoMdSettings} from 'react-icons/io'
 import {FaHeart} from 'react-icons/fa'
 import {FaComment } from 'react-icons/fa'
 // navigate , cookies , Axios , modal
-import {useNavigate} from "react-router-dom";
-import {useCookies}  from 'react-cookie';
-import Axios         from '../../../commonUtils/Axios';
+import {useNavigate}     from "react-router-dom";
+import {useCookies}      from 'react-cookie';
+import * as commonAxios  from '../../../commonUtils/Axios';
 
 /* 
  * 설명 : UserProfilePage.js
@@ -71,7 +71,7 @@ function UserProfilePage() {
             alert('세션이 만료되었습니다.')
             navigate('/login')
         } else {
-          Axios('/user/UserProfile' , {} , callback);
+          commonAxios.Axios('/user/UserProfile' , {} , callback);
           function callback(data) {
             resultData(data);
             setLoading(false);

@@ -10,9 +10,9 @@ import { IoMdHeartEmpty} from 'react-icons/io'
 import { BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 // navigate , cookies , Axios , modal
-import { useNavigate } from "react-router-dom";
-import { useCookies }  from 'react-cookie';
-import Axios           from '../../../commonUtils/Axios';
+import { useNavigate }  from "react-router-dom";
+import { useCookies }   from 'react-cookie';
+import * as commonAxios from '../../../commonUtils/Axios';
 
 /* 
  * 설명 : PostList.js
@@ -75,8 +75,7 @@ function PostList() {
             alert('세션이 만료되었습니다.')
             navigate('/login')
         } else {
-            Axios('/post/postList' , {} , callback);
-
+            commonAxios.Axios('/post/postList' , {} , callback);
             function callback(data) {
                 resultData(data);
                 setLoading(false);
@@ -91,7 +90,7 @@ function PostList() {
         const postData = {
             userId : followId
         }
-        Axios('/follow/doFollow' , postData , callback);
+        commonAxios.Axios('/follow/doFollow' , postData , callback);
         function callback(data) {
             if (data.resultCd === "SUCC") {
                 window.location.reload();

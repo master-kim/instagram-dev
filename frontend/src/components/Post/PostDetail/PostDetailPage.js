@@ -8,8 +8,8 @@ import { IoMdHeartEmpty, IoIosArrowBack, IoIosArrowForward,} from "react-icons/i
 import { BsChat, BsEmojiSmile, BsBookmark }                  from "react-icons/bs";
 import { IconContext }                                       from "react-icons/lib";
 // navigate , cookies , Axios , modal
-import Axios           from '../../../commonUtils/Axios';
-import { useLocation } from 'react-router-dom';
+import * as commonAxios  from '../../../commonUtils/Axios';
+import { useLocation }   from 'react-router-dom';
 
 /* 
  * 설명 : PostDetailPage
@@ -22,6 +22,7 @@ import { useLocation } from 'react-router-dom';
  * 2022.11.03   김요한    소스 정리
  * 2022.11.04   이강현    백엔드연결, 데이터바인딩 완료
  * 2022.11.05   이강현    게시글 상세 클릭시 페이지 호출 완료
+ * 2022.11.12   김요한    엑시오스 추가로 인해 소스 변경
  * -------------------------------------------------------------
  */
 
@@ -49,7 +50,7 @@ export default function PostDetailPage() {
         
       const inputs = {postId};
       
-      Axios('/post/postDetail', inputs, callback);
+      commonAxios.Axios('/post/postDetail', inputs, callback);
       function callback(data) {
         resultData(data);
         setLoading(false);
