@@ -111,13 +111,12 @@ public class UserController {
         
         HashMap<String, Object> resultMap = new HashMap<>();
         
-        //try {
-        //    resultMap = iuserservice.userSave(fileInfo , userRegister);
-        //} catch (Exception e) {
-        //    resultMap.put("resultCd", "FAIL");
-        //    resultMap.put("resultMsg", e.getMessage().toString());
-        //}
-        resultMap.put("resultCd", "SUCC");
+        try {
+            resultMap = iuserservice.userSave(fileInfo , userRegister);
+        } catch (Exception e) {
+            resultMap.put("resultCd", "FAIL");
+            resultMap.put("resultMsg", e.getMessage().toString());
+        }
         
         resultList.add(resultMap);
         
