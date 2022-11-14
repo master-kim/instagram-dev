@@ -12,6 +12,8 @@ import com.meem.stagram.common.utils.FileUtils;
 import com.meem.stagram.dto.RequestDTO;
 import com.meem.stagram.file.FileEntity;
 import com.meem.stagram.file.IFileRepository;
+import com.meem.stagram.postLike.IPostLikeRepository;
+import com.meem.stagram.postLike.PostLikeEntity;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.01    김요한    최초작성 
  * 2022.11.04    김요한    파일 정보 가져오기 공통 함수 사용 x 
  * 2022.11.08    김요한    메인 페이지 파일 가져오기 추가 및 네이밍 변경 
+ * 2022.11.14    김요한    좋아요 기능 추가 
  * -------------------------------------------------------------
  */
 
@@ -56,6 +59,8 @@ public class PostServiceImpl implements IPostService {
     
     private final IFileRepository ifilerepository;
     
+    private final IPostLikeRepository ipostlikerepository;
+    
     // 전체 리스트 조회
     public HashMap<String, Object> postList(String sessionUserId) throws Exception{
         // 결과값을 담는 배열 선언
@@ -71,10 +76,23 @@ public class PostServiceImpl implements IPostService {
         List<String> userIdList = CommonUtils.postAndUserIdList(postList);
         List<FileEntity> postUserImgList = ifilerepository.findByCommonIdInAndFileFolderType(userIdList , "user");
         
+        // 2022.11.14.김요한.추가 - 좋아요 리스트 가져오기
+        List<Integer> postLikeCnt = new ArrayList<Integer>();
+        // 좋아요 누가 했는지 알기 위한 리스트
+        List<List<PostLikeEntity>> postLikeList = new ArrayList<List<PostLikeEntity>>();
+        for (int postIdx=0; postIdx < postList.size(); postIdx++) {
+            List<PostLikeEntity> postLike = ipostlikerepository.findBypostId(postList.get(postIdx).getPostId());
+            postLikeList.add(postLike);
+            postLikeCnt.add(postLike.size());
+        } 
+        
         // 실질적인 결과값
         resultMap.put("postList", postList);
         resultMap.put("postImgList", postImgList);
         resultMap.put("postUserImgList", postUserImgList);
+        
+        resultMap.put("postLikeList", postLikeList);
+        resultMap.put("postLikeCnt", postLikeCnt);
         
         return resultMap;
     }
@@ -137,7 +155,7 @@ public class PostServiceImpl implements IPostService {
         return resultList;
     }
 
-    @Override
+    // 게시글 수정
     public HashMap<String, Object> postUpdate(MultipartFile fileInfo, RequestDTO.postUpdate postUpdateInfo) throws Exception {
         
         // 결과값을 담는 해시맵

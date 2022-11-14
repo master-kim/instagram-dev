@@ -109,7 +109,7 @@
 }
 
 .like span {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -117,8 +117,17 @@
     margin: 6px 0 3px;
 }
 
+.legend p {
+    font-weight: 500;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
 .legend p span {
     font-weight: 500;
+    font-size: 13px;
+    margin-top: 3px;
+    margin-left: 10px;
 }
 
 .time-post time {

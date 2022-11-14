@@ -19,6 +19,8 @@ import lombok.Getter;
  * 2022.10.27    이강현    파일 데이터 담는 이너클래스 추가 (3개) - FileCreateRequest , FileUpdateRequest , PostCreateRequest
  * 2022.10.27    김요한    파일 담는 이너클래스 삭제 -> post , story 생성 시 file 관련 정보 가져오도록 변경
  * 2022.10.27    김요한    게시글 상세보기 담는 클래스 추가
+ * 2022.11.07    김요한    팔로우 리스트 팔로우 걸기를 담는 이너클래스 추가 , 상세보기 이너클래스 추가
+ * 2022.11.14    김요한    게시글 좋아요 담는 변수
  * -------------------------------------------------------------
  */
 
@@ -179,5 +181,13 @@ public class RequestDTO {
         @NotEmpty(message = "유저 아이디가 정확하지 않습니다.")
         private String userId;
     }
+    
+    // 2022.11.14.김요한.추가 - 좋아요 누른 PostId 받기
+    @Getter
+    public static class postLike {
+        @NotNull(message = "게시글 아이디값이 존재하지않습니다.")
+        private Integer postId;
+    }
+    
     
 }

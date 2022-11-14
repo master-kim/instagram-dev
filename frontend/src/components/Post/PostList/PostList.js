@@ -7,6 +7,7 @@ import Header from "../../Header/Header";
 // 아이콘 영역
 import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import { IoMdHeartEmpty} from 'react-icons/io'
+import { IoMdHeart}      from 'react-icons/io'
 import { BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
 import { IconContext } from 'react-icons/lib'
 // navigate , cookies , Axios , modal
@@ -28,6 +29,7 @@ import * as commonAxios from '../../../commonUtils/Axios';
  * 2022.11.05    이강현    게시글 상세페이지 호출기능 추가
  * 2022.11.05    김요한    팔로우 리스트 -> 팔로잉 리스트로 변경 , 게시글 파일 데이터 가져오기 추가
  * 2022.11.07    김요한    팔로우맺기 추가
+ * 2022.11.14    김요한    좋아요 기능 추가 및 표시 추가
  * -------------------------------------------------------------
  */
 
@@ -44,6 +46,8 @@ function PostList() {
      *       "storyList"          : {.... , .... },
      *       "storyUserImgList"   : {.... , .... },
      *       "postList"           : {.... , .... } ,
+     *       "postLikeList"       : {.... , .... } ,
+     *       "postLikeCnt"        : {.... , .... } ,
      *       "postImgList"        : {.... , .... } ,
      *       "postUserImgList"    : {.... , .... } ,
      *       "followSuggList"     : {.... , .... } ,
@@ -98,6 +102,43 @@ function PostList() {
         }
     };
     
+    // 2022.11.14.김요한.추가 - 좋아요
+    const doLike = (postId) => {
+        const postData = {
+            postId : postId
+        }
+        commonAxios.Axios('/post/doLike' , postData , callback);
+        function callback(data) {
+            if (data.resultCd === "SUCC") {
+                window.location.reload();
+            } else {;}
+        }
+    };
+    // 2022.11.14.김요한.추가 - 게시글 유저에 따른 렌더링
+    const postLikeRendering = (postList , postLikeList) => {
+        const result = [];
+        var setCnt = 0;
+        for (let likeIdx=0; likeIdx < postLikeList.length; likeIdx++) {
+            if (postLikeList.length > 0) {
+                if(cookies.loginId === postLikeList[likeIdx].userId && postLikeList[likeIdx].postId === postList.postId){
+                    setCnt = 1;
+                    break;
+                } else {
+                    setCnt = 0;
+                }
+            } else {
+                setCnt = 0;
+                break;
+            }
+        }
+        if (setCnt > 0) {
+            result.push(<div className="icon"><IoMdHeart onClick={() => {doLike(postList.postId);}} /></div>);
+        } else {
+            result.push(<div className="icon"><IoMdHeartEmpty onClick={() => {doLike(postList.postId);}} /></div>);
+        }
+        return result;
+    };
+    
     /* 페이지 호출 시 백엔드 호출 전 로딩 상태 표시 (계속 이상태면 백엔드 서버 꺼져있을 가능성 o) */
     if (loading) {
         return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
@@ -145,7 +186,7 @@ function PostList() {
                                 <IconContext.Provider value={{size: "30px"}} >
                                     <section className="engagement-post" >
                                         <div className="icons-1" >
-                                            <div className="icon"><IoMdHeartEmpty /></div>
+                                            {postLikeRendering(post , totalList.postLikeList[key])}
                                             <div className="icon"><BsChat onClick={() => {pageMove('/postDetailPage' , post.postId);} } /></div>
                                             <div className="icon"><FiSend /></div>
                                         </div>
@@ -153,7 +194,7 @@ function PostList() {
                                     </section>
                                 </IconContext.Provider>
                                 <section className="like" >
-                                    <span>61 curtidas</span>
+                                    <span>좋아요 {totalList.postLikeCnt[key]}개</span>
                                 </section>
                                 <div className="legend" >
                                     <p>

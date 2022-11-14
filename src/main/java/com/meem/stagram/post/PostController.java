@@ -66,6 +66,9 @@ public class PostController {
             resultMap.put("postImgList",  postInfo.get("postImgList"));
             resultMap.put("postUserImgList",  postInfo.get("postUserImgList"));
             
+            resultMap.put("postLikeList",  postInfo.get("postLikeList"));
+            resultMap.put("postLikeCnt",  postInfo.get("postLikeCnt"));
+            
             resultMap.put("followSuggList",  followInfo.get("followSuggList"));
             resultMap.put("followSuggImgList",  followInfo.get("followSuggImgList"));
             
