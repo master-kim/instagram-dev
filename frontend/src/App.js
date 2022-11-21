@@ -10,6 +10,7 @@ import UserProfilePage from "./components/User/UserProfile/UserProfilePage";
 import PostList        from "./components/Post/PostList/PostList";
 import PostDetailPage  from "./components/Post/PostDetail/PostDetailPage";
 import FollowSuggPage  from "./components/Follow/FollowSugg/FollowSuggPage";
+import PostUploadPage  from "./components/Post/PostUploadPage/PostUploadPage";
 
 /* 
  * 설명 : App.js
@@ -36,6 +37,7 @@ function App() {
             <Route exact path="/postList"       element={<PostList />}/>
             <Route exact path="/postDetailPage" element={<PostDetailPage />}/>
             <Route exact path="/followSuggPage" element={<FollowSuggPage />}/>
+            <Route exact path="/postUploadPage" element={<PostUploadPage />}/>
         </Routes>
     </Router>
   );

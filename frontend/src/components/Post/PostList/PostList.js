@@ -5,11 +5,10 @@ import React, { useState , useEffect } from 'react';
 // 헤더 영역
 import Header from "../../Header/Header";
 // 아이콘 영역
-import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
-import { IoMdHeartEmpty} from 'react-icons/io'
-import { IoMdHeart}      from 'react-icons/io'
+import { FiMoreHorizontal, FiSend }        from 'react-icons/fi'
+import { IoMdHeart, IoMdHeartEmpty}        from "react-icons/io";
 import { BsChat, BsEmojiSmile, BsBookmark} from 'react-icons/bs'
-import { IconContext } from 'react-icons/lib'
+import { IconContext }                     from 'react-icons/lib'
 // navigate , cookies , Axios , modal
 import { useNavigate }  from "react-router-dom";
 import { useCookies }   from 'react-cookie';
@@ -30,6 +29,8 @@ import * as commonAxios from '../../../commonUtils/Axios';
  * 2022.11.05    김요한    팔로우 리스트 -> 팔로잉 리스트로 변경 , 게시글 파일 데이터 가져오기 추가
  * 2022.11.07    김요한    팔로우맺기 추가
  * 2022.11.14    김요한    좋아요 기능 추가 및 표시 추가
+ * 2022.11.19    김요한    댓글 기능 추가
+ * 2022.11.21    김요한    댓글 삭제 추가 (수정은 진행중)
  * -------------------------------------------------------------
  */
 
@@ -43,15 +44,18 @@ function PostList() {
      * 
      * 백엔드 response 데이터 형태
      * -> totalList : {
-     *       "storyList"          : {.... , .... },
-     *       "storyUserImgList"   : {.... , .... },
-     *       "postList"           : {.... , .... } ,
-     *       "postLikeList"       : {.... , .... } ,
-     *       "postLikeCnt"        : {.... , .... } ,
-     *       "postImgList"        : {.... , .... } ,
-     *       "postUserImgList"    : {.... , .... } ,
-     *       "followSuggList"     : {.... , .... } ,
-     *       "followSuggImgList"  : {.... , .... } 
+     *       "storyList"               : {.... , .... } ,
+     *       "storyUserImgList"        : {.... , .... } ,
+     *       "postList"                : {.... , .... } ,
+     *       "postImgList"             : {.... , .... } ,
+     *       "postUserImgList"         : {.... , .... } ,
+     *       "postCommentList"         : {.... , .... } ,
+     *       "postCommentUserImgList"  : {.... , .... } ,
+     *       "postCommentCnt"          : {.... , .... } ,
+     *       "postLikeList"            : {.... , .... } ,
+     *       "postLikeCnt"             : {.... , .... } ,
+     *       "followSuggList"          : {.... , .... } ,
+     *       "followSuggImgList"       : {.... , .... } 
      *    }
      */
      
@@ -139,6 +143,88 @@ function PostList() {
         return result;
     };
     
+    
+    // 2022.11.19.김요한.추가 -댓글달기
+    const [inputData, setinputData] = useState();
+    const onChange = (e) => {
+        const { value, id } = e.target;  
+        setinputData({
+          ...inputData,                     
+          [id]: value                    
+        });
+    };
+    const doComment = (postId) => {
+        const postData = {
+            postId      : postId ,
+            postComment : inputData.postComment
+        }
+        commonAxios.Axios('/post/doComment' , postData , callback);
+        function callback(data) {
+            if (data.resultCd === "SUCC") {
+                window.location.reload();
+            } else {;}
+        }
+    };
+    
+    // 2022.11.21.김요한.추가 - 댓글 영역 렌더링
+    const detailCommentRendering = (commentList , postId , commentUserImg) => {
+        const result = [];
+        if (cookies.loginId === commentList.userId) {
+            result.push(
+            <div className="post-detail-comment">
+                <div className="post-detail-fake-comment">
+                <img src={commentUserImg.fileLocation} alt="post" style={{width: "20px" , height:"20px" , borderRadius : "30%"}}/>
+                <p className="commentP">{commentList.userentity.userNick}<span id={"comment_" + commentList.commentId} className="commentSpan">{commentList.content}</span></p>
+                </div>
+                {/* <button onClick={()=>{CommentUpdate(commentList.commentId , postId, "U");} } style={{margin: "0px 10px 0px"}}>수정</button> */}
+                <button onClick={()=>{CommentUpdate(commentList.commentId ,postId , "D");} } style={{margin: "0px 10px 0px"}}>삭제</button>
+                <button onClick={()=>{doCommentLike(commentList.commentId, postId);} }><IoMdHeartEmpty/></button>
+            </div> 
+            );
+        } else {
+            result.push(
+            <div className="post-detail-comment">
+                <div className="post-detail-fake-comment">
+                <img src={commentUserImg.fileLocation} alt="post" style={{width: "20px" , height:"20px" , borderRadius : "30%"}}/>
+                <p className="commentP">{commentList.userentity.userNick}<span className="commentSpan">{commentList.content}</span></p>
+                </div>
+                <button onClick={()=>{doCommentLike(commentList.commentId , postId);} }><IoMdHeartEmpty/></button>
+            </div> 
+            );
+        }
+        return result;
+    };
+    
+    // 2022.11.21.김요한.추가 - 댓글 수정 ,삭제 [수정은 수정 폼 만들어서 넣어야하므로 추후 다시 만들 예정]
+    const CommentUpdate = (commentId , postId, commentType) => {
+        const commentData = {
+            commentId      : commentId ,
+            postId         : postId ,
+            commentType    : "",
+            commentContent : ""
+        }
+        if (commentType === "U") {
+            commentData.commentType = "U";
+        } else {
+            commentData.commentType = "D";
+        }
+        commonAxios.Axios('/post/updateComment' , commentData , callback);
+    
+        function callback(data) {
+            if (data.resultCd === "SUCC") {
+                window.location.reload();
+            } else {;}
+        }
+    };
+    
+    // 2022.11.21.김요한.추가 - 댓글 좋아요 추후 개발 예정
+    const doCommentLike = (commentId) => {
+        const commentData = {
+        commentId : commentId , 
+        userId    : cookies.loginId
+        }
+    };
+    
     /* 페이지 호출 시 백엔드 호출 전 로딩 상태 표시 (계속 이상태면 백엔드 서버 꺼져있을 가능성 o) */
     if (loading) {
         return <div className="box" style={{margin: "30px 0"}} > Loading... </div>;
@@ -204,6 +290,13 @@ function PostList() {
                                 <div className="time-post" >
                                     <time>{post.createDt}</time>
                                 </div>
+                                <div style={{margin: "6px 0 6px"}}>
+                                    {totalList.postCommentList[key].map((commentList , commentKey) => {
+                                        if(post.postId === commentList.postId){
+                                            {return detailCommentRendering(commentList , post.postId ,  totalList.postCommentUserImgList[commentKey])}
+                                        } else {;}
+                                    })}
+                                </div>
                                 <div className="comment" >
                                     <div className="fake-comment" >
                                         <IconContext.Provider value={{size: '25px'}}>
@@ -211,9 +304,9 @@ function PostList() {
                                                 <BsEmojiSmile />
                                             </div>
                                         </IconContext.Provider>
-                                        <input placeholder="댓글달기..." />
+                                        <input id="postComment" type="text" placeholder="댓글달기..." onChange={onChange} />
                                     </div>
-                                    <button>게시</button>
+                                    <button onClick={()=>{doComment(post.postId);} }>게시</button>
                                 </div>
                                 </div>
                             </div>

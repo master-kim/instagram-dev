@@ -29,6 +29,8 @@ import lombok.RequiredArgsConstructor;
  * 2022.10.27    김요한    게시글 저장 시 파일 생성 + 게시글 데이터 생성
  * 2022.10.28    이강현    게시글 상세보기 컨트롤러 생성
  * 2022.11.08    김요한    게시글 리스트 가져올때 필요 파일 리스트 추가 및 1번호출로 변경
+ * 2022.11.19    김요한    게시글 상세보기 댓글기능 , 좋아요기능 추가
+ * 2022.11.21    김요한    게시글 상세보기 댓글 앞 유저 이미지 가져오기 , 댓글 삭제 , 수정 기능 추가
  * -------------------------------------------------------------
  */
 
@@ -69,6 +71,10 @@ public class PostController {
             resultMap.put("postLikeList",  postInfo.get("postLikeList"));
             resultMap.put("postLikeCnt",  postInfo.get("postLikeCnt"));
             
+            resultMap.put("postCommentList",  postInfo.get("postCommentList"));
+            resultMap.put("postCommentUserImgList",  postInfo.get("postCommentUserImgList"));
+            resultMap.put("postCommentCnt",  postInfo.get("postCommentCnt"));
+            
             resultMap.put("followSuggList",  followInfo.get("followSuggList"));
             resultMap.put("followSuggImgList",  followInfo.get("followSuggImgList"));
             
@@ -84,10 +90,20 @@ public class PostController {
     }
     
     // 2022.10.28.이강현.추가 - 게시글 상세보기 가져오는 컨트롤러 생성
+    // 2022.11.21.김요한.수정 - 소스정리
     @PostMapping("/postDetail")
     public HashMap<String, Object> postDetail(@RequestBody @Valid RequestDTO.postDetail postDetail) throws Exception {
         
-        return ipostservice.postDetail(postDetail.getPostId());
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        Integer postId = postDetail.getPostId();
+        try {
+            resultMap  = ipostservice.postDetail(postId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCd", "FAIL");
+            resultMap.put("resultMsg", e.getMessage().toString());
+        }
+        return resultMap;
         
     }
     
@@ -136,5 +152,59 @@ public class PostController {
         
         return resultList;
     }
+    
+    // 2022.11.19.김요한.추가 - 게시글 좋아요 기능 추가 (상세보기 포함)
+    @PostMapping("/doLike")
+    public HashMap<String, Object> doLike(HttpServletRequest request , @RequestBody @Valid RequestDTO.postLike postLikeInfo) throws Exception{
+        
+        HashMap<String, Object> resultMap = new HashMap<>();
+        
+        String sessionUserId = request.getSession().getAttribute("user_id").toString();
+        try {
+            resultMap = ipostservice.postDoLike(sessionUserId , postLikeInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCd", "FAIL");
+            resultMap.put("resultMsg", e.getMessage().toString());
+        }
+        return resultMap;
+    }
+    
+    // 2022.11.21.김요한.추가 - 게시글 댓글 달기 기능 추가 (상세보기 포함)
+    @PostMapping("/doComment")
+    public HashMap<String, Object> doComment(HttpServletRequest request , @RequestBody @Valid RequestDTO.postComment postCommentInfo) throws Exception{
+        
+        HashMap<String, Object> resultMap = new HashMap<>();
+        
+        String sessionUserId = request.getSession().getAttribute("user_id").toString();
+        try {
+            resultMap = ipostservice.postDoComment(sessionUserId , postCommentInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCd", "FAIL");
+            resultMap.put("resultMsg", e.getMessage().toString());
+        }
+        
+        return resultMap;
+    }
+    
+    // 2022.11.21.김요한.추가 - 댓글 삭제 및 수정 기능 추가 (상세보기 포함)
+    @PostMapping("/updateComment")
+    public HashMap<String, Object> updateComment(HttpServletRequest request , @RequestBody @Valid RequestDTO.updateComment updateCommentInfo) throws Exception{
+        
+        HashMap<String, Object> resultMap = new HashMap<>();
+        
+        String sessionUserId = request.getSession().getAttribute("user_id").toString();
+        try {
+            resultMap = ipostservice.updateComment(sessionUserId , updateCommentInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("resultCd", "FAIL");
+            resultMap.put("resultMsg", e.getMessage().toString());
+        }
+        
+        return resultMap;
+    }
+    
     
 }

@@ -21,6 +21,8 @@ import lombok.Getter;
  * 2022.10.27    김요한    게시글 상세보기 담는 클래스 추가
  * 2022.11.07    김요한    팔로우 리스트 팔로우 걸기를 담는 이너클래스 추가 , 상세보기 이너클래스 추가
  * 2022.11.14    김요한    게시글 좋아요 담는 변수
+ * 2022.11.19    김요한    댓글 작성 시 정보 담는 클래스 추가
+ * 2022.11.21    김요한    댓글 수정 시 담는 클래스 추가
  * -------------------------------------------------------------
  */
 
@@ -187,6 +189,30 @@ public class RequestDTO {
     public static class postLike {
         @NotNull(message = "게시글 아이디값이 존재하지않습니다.")
         private Integer postId;
+    }
+    
+    // 2022.11.19.김요한.추가 - 댓글 정보
+    @Getter
+    public static class postComment {
+        @NotNull(message = "게시글 아이디값이 존재하지않습니다.")
+        private Integer postId;
+        @NotNull
+        @NotEmpty(message = "빈 값은 게시 할 수 없습니다.")
+        private String postComment;
+    }
+    
+    // 2022.11.21.김요한.추가 - 댓글 수정 정보
+    @Getter
+    public static class updateComment {
+        @NotNull(message = "게시글 아이디값이 존재하지않습니다.")
+        private Integer commentId;
+        @NotNull(message = "게시글 아이디값이 존재하지않습니다.")
+        private Integer postId;
+        @NotNull
+        @NotEmpty(message = "댓글 구분 값이 존재하지않습니다.")
+        private String commentType;
+        @NotNull
+        private String commentContent;
     }
     
     

@@ -130,6 +130,20 @@
     margin-left: 10px;
 }
 
+.commentP {
+    font-weight: 450;
+    font-size: 13px;
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
+.commentSpan {
+    font-weight: 300;
+    font-size: 13px;
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
 .time-post time {
     font-size: 11px;
     color: var(--secondary);

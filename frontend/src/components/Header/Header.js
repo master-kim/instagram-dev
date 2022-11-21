@@ -101,7 +101,7 @@ function Header(props) {
                         - 추후 탐색 기능 추가 여부 논의
                         */}
                         <img className="img-user" src={cookies.loginUserImg.fileLocation} alt="profile" onClick={() => pageMove('/userProfile')}/>
-                        <span onClick={() => pageMove('/userProfile')} >{cookies.loginNick}</span>
+                        <span className="span-user-nick" onClick={() => pageMove('/userProfile')} >{cookies.loginNick}</span>
                         <div>
                             <FiArrowRightCircle onClick={() => logout()} />
                         </div>
