@@ -1,0 +1,191 @@
+.post-upload-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #00000024;
+    position: relative;
+}
+
+.post-upload-box-title {
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid lightgrey;
+}
+
+.post-upload-box-inner {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 69.2vh;
+    ;
+    background: white;
+    border-radius: 15px;
+}
+
+.post-upload-box-inner-inner {
+    display: flex;
+    width: 100%;
+
+    justify-content: center;
+    align-items: center;
+    height: 62vh;
+
+}
+
+.post-upload-username {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-secondary);
+    margin: 10px;
+}
+
+.post-upload-contents {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.post-upload-username .img-header-post {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.post-upload-contents .img-header-post {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.infos-post {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.img-post-upload {
+    width: 70%;
+    background-color: black;
+    border-bottom-left-radius:  15px;
+}
+
+.img-post-upload img {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.post-upload-footer-post {
+    background: white;
+    width: 50%;
+    height: 100%;
+    display: grid;
+
+}
+
+.post-upload-engagement-post {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.post-upload-engagement-post .icons-1 {
+    display: flex;
+    gap: 16px;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.post-upload-like {
+    margin: 10px;
+}
+
+.post-upload-like span {
+    font-size: 15px;
+    font-weight: 500;
+
+}
+
+.post-upload-legend {
+    margin: 10px;
+}
+
+.post-upload-legend p span {
+    font-weight: 500;
+    margin: 10px;
+}
+
+.post-upload-time-post time {
+    font-size: 11px;
+    color: var(--secondary);
+    margin: 10px;
+}
+
+.post-upload-comment {
+    border-top: 1px solid var(--border-secondary);
+    margin: 10px;
+
+    display: flex;
+}
+
+.post-upload-fake-comment {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 16px;
+    margin-top: 10px;
+
+
+
+}
+
+
+.post-upload-fake-comment input {
+    font-size: 16px;
+    border: 0;
+}
+
+.post-upload-comment button {
+    color: var(--quartary);
+    font-weight: 500;
+    cursor: pointer;
+    border: 0;
+}
+
+.icon-arrow {
+    cursor: pointer;
+    font-size: 400%;
+    background-color: white;
+    height: 0;
+
+}
+
+.icon-arrow svg {
+    border-radius: 50%;
+    background: white;
+}
+
+.info-button {
+    cursor: pointer;
+}
+
+.upload-close {
+    position: absolute;
+    font-size: 40pt;
+    line-height: 100%;
+    color: white;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+}
