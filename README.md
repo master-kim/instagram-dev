@@ -38,10 +38,14 @@
 <div align="left">
   <p> (6) 메인화면 , (7) 메인화면2 </p>
 	<img src="https://user-images.githubusercontent.com/61484038/201460866-72aa2b82-b201-4692-873b-9d9605432c0c.PNG" width=49% height="350"/>
-	<img src="https://user-images.githubusercontent.com/61484038/201460869-0af1fd2c-d23a-457a-93b9-cf059b140277.PNG" width=49% height="350"/>
+	<img src="https://user-images.githubusercontent.com/61484038/203252049-4f27b519-deb5-4094-85ad-e14b7c191f34.PNG" width=49% height="350"/>
 </div>
 <div align="left">
-  <p> (8) 마이페이지 , (9) 진행중 </p>
+  <p> (8) 상세보기페이지 , (9) 진행중 </p>
+	<img src="https://user-images.githubusercontent.com/61484038/203251817-268f8ec3-988b-4364-9cc0-a4704ab370a9.PNG" width=49% height="350"/>
+</div>
+<div align="left">
+  <p> (10) 마이페이지 , (9) 진행중 </p>
 	<img src="https://user-images.githubusercontent.com/61484038/201460865-c4eebd74-d69b-47dc-b9ef-a03e69bcd79a.PNG" width=49% height="350"/>
 </div>
 
