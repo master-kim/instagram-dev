@@ -42,7 +42,7 @@
 </div>
 <div align="left">
   <p> (8) 상세보기페이지 , (9) 진행중 </p>
-	<img src="https://user-images.githubusercontent.com/61484038/203251817-268f8ec3-988b-4364-9cc0-a4704ab370a9.PNG" width=49% height="350"/>
+	<img src="https://user-images.githubusercontent.com/61484038/203252339-ccf6dee0-8357-4562-b7b5-5bcc9105ce86.PNG" width=49% height="350"/>
 </div>
 <div align="left">
   <p> (10) 마이페이지 , (9) 진행중 </p>
