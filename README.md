@@ -37,8 +37,8 @@
 </div>
 <div align="left">
   <p> (6) 메인화면 , (7) 메인화면2 </p>
-	<img src="https://user-images.githubusercontent.com/61484038/201460866-72aa2b82-b201-4692-873b-9d9605432c0c.PNG" width=49% height="350"/>
 	<img src="https://user-images.githubusercontent.com/61484038/203252049-4f27b519-deb5-4094-85ad-e14b7c191f34.PNG" width=49% height="350"/>
+	<img src="https://user-images.githubusercontent.com/61484038/203253587-014b748e-f2a9-4b96-bfa4-8537ec56574e.PNG" width=49% height="350"/>
 </div>
 <div align="left">
   <p> (8) 상세보기페이지 , (9) 진행중 </p>
