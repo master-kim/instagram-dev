@@ -14,7 +14,8 @@ import { IconContext } from 'react-icons'
 // navigate , cookies , Axios , modal
 import {useNavigate}     from "react-router-dom";
 import {useCookies}      from 'react-cookie';
-import Modal             from '../Common/Modal';
+//import Modal             from '../Common/Modal';
+import PostUploadModal   from "../Common/PostUploadModal";
 import * as commonAxios  from '../../commonUtils/Axios';
 
 /* 
@@ -28,6 +29,8 @@ import * as commonAxios  from '../../commonUtils/Axios';
  * 2022.10.26    김요한    로그아웃 아이콘 추가 (로그아웃 기능 추가)
  * 2022.11.03    김요한    소스 정리
  * 2022.11.08    김요한    유저 프로필 이미지 데이터 바인딩 추가 (쿠키에서 가져오기)
+ * 2022.11.29    김영일    모달창 추가(게시물 업로드)
+ * 2022.12.07    김요한    모달창 정리 (헤더 부분)
  * -------------------------------------------------------------
 */
 
@@ -39,12 +42,28 @@ function Header(props) {
     const pageMove = (url) => {
         navigate(url)
     }
-    // 2022.11.01.김요한.추가 - 모달창 추가
-    const [modalOpen,setModalOpen] = useState(false);
-    const [modalData,setModalData] = useState([]);
-    const closeModal = () => {
-        setModalOpen(false);
+    
+    // 2022.11.29.김영일.수정 - 업로드 모달창 추가 
+    const [modalOpen, setModalOpen] = useState(false);
+    //const [selectModalOpen, selectSetModalOpen] = useState(false);
+    // 모달창 노출
+    const showModal = () => {
+      //selectSetModalOpen(false);
+      setModalOpen(true);
     };
+    // 모달창 닫기
+    const closeModal = () => {
+      setModalOpen(false);
+    };
+    
+    //const selectShowModal = () => {
+    //  selectSetModalOpen(true);
+    //};
+    //// 모달창 닫기
+    //const selectCloseModal = () => {
+    //  selectSetModalOpen(false);
+    //};
+  
     // 2022.10.26.김요한.추가 - 백엔드 연결(데이터 송수신)
     const logout = async () => {
         await commonAxios.Axios('/user/Logout' , {} , callback);
@@ -54,23 +73,29 @@ function Header(props) {
             removeCookie('loginId');
             removeCookie('loginNick');
             removeCookie('loginUserImg');
-            }  else {;}
-            setModalData(data);
-            setModalOpen(true);
+            }  else {
+                alert("서버오류");
+            }
+            //setModalData(data);
+            //setModalOpen(true);
         }
     }
     
     // 화면 영역
     return (
         <header className="header" >
-            <div>
-                <Modal open={modalOpen} close={closeModal} header="로그인">
-                <main> {props.children} </main>
-                {modalData.map((result) => (
-                  <span>{result.resultMsg}<br/></span>
-                ))}
-              </Modal>
-            </div>
+            {/* <Modal open={selectModalOpen} onClose={selectCloseModal} header="업로드">
+              <main>{props.children}</main>
+              <div className="selectDiv"style={{ textAlign: "center"}}>
+                <button className="selectFont" onClick={()=>{showModal();} }>게시글 업로드</button>
+                <hr/>
+                <button className="selectFont" onClick={()=>{showModal();} }>스토리 업로드</button>
+              </div>
+              <div style={{ textAlign: "right"}}>
+                <button className="close-button" onClick={selectCloseModal}>닫기</button>
+              </div>
+            </Modal>
+            */}
             <div className="container" >
                 <img className="logo" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="profile" onClick={() => pageMove('/postList')}/>
                 <div className="input-fake">
@@ -90,7 +115,9 @@ function Header(props) {
                         - 추후 채팅 기능 추가 여부 논의
                         */}
                         <div>
-                            <BsPlusSquare />
+                            {/* 2022.11.30.김영일.추가 - 업로드 모달*/}
+                            <BsPlusSquare style={{ cursor: "pointer" }} onClick={showModal}/>
+                            <PostUploadModal open={modalOpen} onClose={closeModal} />
                         </div>
                         <div>
                             <FiHeart />
