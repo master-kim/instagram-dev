@@ -10,7 +10,6 @@ import UserProfilePage from "./components/User/UserProfile/UserProfilePage";
 import PostList        from "./components/Post/PostList/PostList";
 import PostDetailPage  from "./components/Post/PostDetail/PostDetailPage";
 import FollowSuggPage  from "./components/Follow/FollowSugg/FollowSuggPage";
-import PostUploadPage  from "./components/Post/PostUploadPage/PostUploadPage";
 
 /* 
  * 설명 : App.js
@@ -22,6 +21,7 @@ import PostUploadPage  from "./components/Post/PostUploadPage/PostUploadPage";
  * 2022.10.28    김요한    메인페이지 (통합) : PostPage [layout : story , suggestion , post] 을 -> postList.js 한개로 통합 
  * 2022.11.03    김요한    페이지 호출 URL 및 소스 변경 
  * 2022.11.08    김요한    팔로우 추천 페이지 추가 
+ * 2022.11.30    김영일    업로드페이지 -> 모달로 변경 
  * -------------------------------------------------------------
 */
 
@@ -37,7 +37,6 @@ function App() {
             <Route exact path="/postList"       element={<PostList />}/>
             <Route exact path="/postDetailPage" element={<PostDetailPage />}/>
             <Route exact path="/followSuggPage" element={<FollowSuggPage />}/>
-            <Route exact path="/postUploadPage" element={<PostUploadPage />}/>
         </Routes>
     </Router>
   );
