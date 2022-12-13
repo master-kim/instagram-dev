@@ -42,7 +42,7 @@
 </div>
 <div align="left">
   <p> (8) 상세보기페이지 , (9) 게시글 등록페이지 , (10) 게시글 등록페이지2 </p>
-	<img src="https://user-images.githubusercontent.com/61484038/203252339-ccf6dee0-8357-4562-b7b5-5bcc9105ce86.PNG" width=49% height="350"/>
+	<img src="https://user-images.githubusercontent.com/61484038/203252339-ccf6dee0-8357-4562-b7b5-5bcc9105ce86.PNG" width=32% height="350"/>
 	<img src="https://user-images.githubusercontent.com/61484038/207207355-ad3d2d99-2e74-43dc-bc6f-d69b7fdb2c2b.PNG" width=32% height="350"/>
         <img src="https://user-images.githubusercontent.com/61484038/207207359-1169fb0f-c879-4923-9815-83996683a359.PNG" width=32% height="350"/>
 </div>
