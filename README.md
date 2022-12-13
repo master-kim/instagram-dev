@@ -1,7 +1,7 @@
 # INSTAGRAM-DEV
 
 - 프로젝트 상태 : 진행중
-- 진행중 프로젝트 기간 : 2022년 10월 12일 ~ 
+- 진행중 프로젝트 기간 : 2022년 10월 12일 ~ 12월 13일 (1차 프로젝트 완료)
 
 # 프로젝트 참여 개발자 (개발인원:4명)
 
@@ -28,7 +28,7 @@
   <p> (1) 로그인 얼럿 공통팝업 , (2) 로그인 비밀번호 실패 팝업 , (3) 회원가입 얼럿 공통 팝업 </p>
 	<img src="https://user-images.githubusercontent.com/61484038/200118266-7f0eacd5-45bc-481d-9248-fd74337052d0.PNG" width=32% height="350"/>
 	<img src="https://user-images.githubusercontent.com/61484038/200118376-cf924197-fac5-48d3-839b-1e281c987bb8.PNG" width=32% height="350"/>
-  <img src="https://user-images.githubusercontent.com/61484038/200118378-9101b9a6-1430-47c6-83d1-c27c1887fce2.PNG" width=32% height="350"/>
+        <img src="https://user-images.githubusercontent.com/61484038/200118378-9101b9a6-1430-47c6-83d1-c27c1887fce2.PNG" width=32% height="350"/>
 </div>
 <div align="left">
   <p> (4) 로그인 화면 , (5) 회원가입 화면 </p>
@@ -41,11 +41,8 @@
 	<img src="https://user-images.githubusercontent.com/61484038/203253587-014b748e-f2a9-4b96-bfa4-8537ec56574e.PNG" width=49% height="350"/>
 </div>
 <div align="left">
-  <p> (8) 상세보기페이지 , (9) 진행중 </p>
+  <p> (8) 상세보기페이지 , (9) 게시글 등록페이지 , (10) 게시글 등록페이지2 </p>
 	<img src="https://user-images.githubusercontent.com/61484038/203252339-ccf6dee0-8357-4562-b7b5-5bcc9105ce86.PNG" width=49% height="350"/>
+	<img src="https://user-images.githubusercontent.com/61484038/207207355-ad3d2d99-2e74-43dc-bc6f-d69b7fdb2c2b.PNG" width=32% height="350"/>
+        <img src="https://user-images.githubusercontent.com/61484038/207207359-1169fb0f-c879-4923-9815-83996683a359.PNG" width=32% height="350"/>
 </div>
-<div align="left">
-  <p> (10) 마이페이지 , (9) 진행중 </p>
-	<img src="https://user-images.githubusercontent.com/61484038/201460865-c4eebd74-d69b-47dc-b9ef-a03e69bcd79a.PNG" width=49% height="350"/>
-</div>
-
