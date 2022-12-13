@@ -46,3 +46,7 @@
 	<img src="https://user-images.githubusercontent.com/61484038/207207355-ad3d2d99-2e74-43dc-bc6f-d69b7fdb2c2b.PNG" width=32% height="350"/>
         <img src="https://user-images.githubusercontent.com/61484038/207207359-1169fb0f-c879-4923-9815-83996683a359.PNG" width=32% height="350"/>
 </div>
+<div align="left">
+  <p> (11) 마이페이지</p>
+	<img src="https://user-images.githubusercontent.com/61484038/201460865-c4eebd74-d69b-47dc-b9ef-a03e69bcd79a.PNG" width=49% height="350"/>
+</div>
